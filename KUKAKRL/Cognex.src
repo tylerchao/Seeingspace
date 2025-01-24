@@ -1,0 +1,320 @@
+&ACCESS RVP
+&REL 3
+&PARAM SensorITMASK = *
+&PARAM TEMPLATE = C:\KRC\Roboter\Template\vorgabe
+&PARAM DISKPATH = KRC:\R1\Program
+DEF Cognex( )
+   ;FOLD Declaration
+      DECL EKI_STATUS RET
+      DECL REAL CognexX
+      DECL REAL CognexY
+      DECL REAL CognexA
+      INT Stage
+      DECL E6POS TOWER_AREA
+      DECL E6POS CALIBRATING_AREA
+      DECL E6POS CALIBRATING_CLAMPING
+      INT DIRECTION_COUNTER
+      decl KrlMsgPar_t cngx_msg_params[3]
+      int cngx_msg_handle
+      
+   ;ENDFOLD (Declaration)
+   ;FOLD INI
+      ;FOLD BASISTECH INI
+         BAS (#INITMOV,0 )
+      ;ENDFOLD (BASISTECH INI)
+      ;FOLD USER INI
+         ;Make your modifications here
+         CognexX = 0; muss einmal gesetzt werden, sonst in EKI_GetReal nicht nutzbar
+         CognexY = 0; muss einmal gesetzt werden, sonst in EKI_GetReal nicht nutzbar
+         CognexA = 0; muss einmal gesetzt werden, sonst in EKI_GetReal nicht nutzbar
+         
+         cngx_msg_params[1] = {par_type #value, par_real 0.0}
+         cngx_msg_params[2] = {par_type #value, par_real 0.0}
+         cngx_msg_handle = 0
+         
+         ;the initial value 
+         TOWER_AREA = {X 608, Y 443, Z 265, A 120, B 0, C 179}
+         CALIBRATING_AREA={X 153.99, Y 397.75, Z 245.58, A -142.78, B 37.08, C -155.55}
+         CALIBRATING_CLAMPING = {X 139.96, Y 397.01, Z 77.08, A -142.26, B 36.84, C -154.89}
+         $FLAG[5]= TRUE  ; true for vertical and false for horizontal 
+         
+         ;The counter for changing gripper's direction
+         DIRECTION_COUNTER  = 0
+         
+      ;ENDFOLD (USER INI)
+   ;ENDFOLD (INI)
+   
+   ;BAS(#BASE,1) ; origin cognex image is origin base
+   BAS(#TOOL,1)
+   BAS(#BASE,0)
+   
+   RET = EKI_Init("XmlServer")
+   RET = EKI_Lock("XmlServer") ; discard any input by default (does not seem to help)
+   
+   SPTP XHOME1      ;move to home position 
+   
+   HOME = $POS_ACT
+   
+   if(Is_Reachable(Home) == TRUE) then
+       ROBOT_STATES[1] = TRUE   ;Reach Home position
+   
+   endif
+   
+   ;initialise the state of the gripper (open)
+   $OUT[1] = FALSE
+   $OUT[2] = TRUE
+   CHECKING_WARNING = TRUE
+   
+   DefaultPos = $POS_ACT ;current cartesian robot position
+   
+   JENGA_LEVEL = 1
+   
+   while True
+      
+      RET = EKI_Open("XmlServer")   
+      
+      ROBOT_STATES[2] = TRUE  ; wait for connection
+      
+      ; wait until server is conntected
+      wait for $FLAG[1]
+      
+
+      
+      ; repeat while connected / awaiting data
+      while $FLAG[1]           
+         
+         ;FOLD receive from external program
+            ; <Cognex><X>0</X><Y>0</Y><A>0</A></Cognex>
+         ;ENDFOLD (Receive from external program)
+         
+         RET = EKI_Unlock("XmlServer") ; enable reciever       
+         
+         IF Is_Reachable(HOME) THEN
+            ;Clear boolean array of states
+            FOR Stage = 10 TO 2 STEP -1
+               ROBOT_STATES[Stage]= FALSE
+            ENDFOR  
+         ELSE
+            MsgNotify("unreachable, will try later")
+         ENDIF 
+         
+         ROBOT_STATES[3] = TRUE   ;wait for data
+         
+         ; wait until Cognex element was received or disconnect happened
+         wait for $FLAG[3]
+         
+         if $FLAG[3] == TRUE then 
+            CHECKING_WARNING = FALSE 
+         ENDIF
+         
+         if $FLAG[2] then
+            ; Cognex data received
+            
+            ROBOT_STATES[4] = TRUE 
+            
+            RET = EKI_Lock("XmlServer") ; discard any input while moving
+            ; this leads to ERROR  tFctCall   22:02:48.664 : CConnection: Can't LOCK receive process!!!!
+            
+            $FLAG[2] = FALSE ; reset "data received"
+            
+            RET = EKI_GetReal("XmlServer", "Cognex/X", CognexX)
+            RET = EKI_GetReal("XmlServer", "Cognex/Y", CognexY)
+            RET = EKI_GetReal("XmlServer", "Cognex/A", CognexA)
+            
+            ; only move x,y,a but have rest defined
+            CognexPos = DefaultPos  
+            CognexPos.X = CognexX
+            CognexPos.Y = CognexY
+            CognexPos.A = CognexA
+            
+            CognexPos.Z = 264  
+            CognexPos.B = 0
+            CognexPos.C = 180
+            
+            ;CognexPos.A = CognexA_adjusted
+            
+            debug_e6pos = CognexPos
+            BlockPos = CognexPos
+            BlockPos.Z = 64
+            
+            RET = EKI_ClearBuffer("XmlServer", "Cognex") ; clear buffer before moving (does not seem to help)
+            
+            
+            SLIN CognexPos
+            
+         endif
+         
+         ;FOLD motion block 2 - move to target
+            ;try here to move ount the slin CognexPos
+         ;ENDFOLD (move to target)
+         IF Is_Reachable(BlockPos) THEN
+            ROBOT_STATES[5] = TRUE
+         ENDIF
+         
+         ;after reach to the target and start to move down and clamp thing
+         ;go down straight 
+         LIN_REL {Z -200}
+         
+         ;add wait for 0,5 second
+         WAIT SEC 0.5
+         
+         ;controlling gripper close
+         $OUT[1] = TRUE
+         $OUT[2] = FALSE
+         
+        
+         WAIT SEC 0.5     
+         
+         ;return back to the middle point 
+         LIN_REL {Z +200}
+         
+         ;FOLD motion block 3 - move to calibration area
+            ;move to calibrating area
+         ;ENDFOLD (move to target)
+         
+         ROBOT_STATES[6] = TRUE
+         
+         ;move to calibrating area 
+         PTP CALIBRATING_AREA
+         
+         
+         IF Is_Reachable(CALIBRATING_AREA) THEN
+            ROBOT_STATES[7] = TRUE
+         ENDIF
+         
+         
+         LIN_REL {Z -150}
+         
+         ;add wait for 0,5 second
+         WAIT SEC 0.5
+         
+         ;controlling gripper open 
+         $OUT[1] = FALSE
+         $OUT[2] = TRUE
+         
+         WAIT SEC 0.5     
+         
+         LIN_REL {Z +100}
+         
+         ;FOLD motion block 4 - calibrating blocks
+            ;calibrating blocks
+         ;ENDFOLD (move to target)        
+         
+         PTP CALIBRATING_CLAMPING        
+               
+         ;add wait for 0,5 second
+         WAIT SEC 0.5
+         
+         ;controlling gripper close
+         $OUT[1] = TRUE
+         $OUT[2] = FALSE
+         
+         WAIT SEC 0.5           
+         
+         LIN_REL {Z +150}         
+         
+         ;decide a loop for x or y decrement
+         IF $FLAG[5] == TRUE THEN    
+            TOWER_AREA.A = 120
+            TOWER_AREA.Y = TOWER_AREA.Y - 26 
+            
+         ELSE   
+            TOWER_AREA.A = 30
+            TOWER_AREA.X = TOWER_AREA.X - 26
+            
+         ENDIF
+         
+         ;FOLD motion block 5 - building tower 
+            ;move to tower area and start building tower
+         ;ENDFOLD (move to target)
+         
+         ROBOT_STATES[8] = TRUE
+         
+         PTP TOWER_AREA
+         
+         IF Is_Reachable(TOWER_AREA) THEN
+            ROBOT_STATES[9] = TRUE
+         ENDIF
+         
+         LIN_REL {Z -200}
+         
+         WAIT SEC 0.5
+         
+         ;open gripper
+         $OUT[1] = FALSE
+         $OUT[2] = TRUE
+         
+         WAIT SEC 0.5
+         
+         ;reach the building area to start dropping blocks of Jenga
+         PTP TOWER_AREA
+         
+         DIRECTION_COUNTER  = DIRECTION_COUNTER  + 1
+         
+         ;increase the hight of the layer
+         IF  MOD(DIRECTION_COUNTER , 3) == 0 THEN
+            
+            TOWER_AREA.Z = TOWER_AREA.Z + 15
+            JENGA_LEVEL =  JENGA_LEVEL  + 1
+            IF TOWER_AREA.A == 120 THEN 
+               ;now gripper should be horizontal  
+               $FLAG[5]= FALSE
+               TOWER_AREA.X = 662
+               TOWER_AREA.Y= 395                
+            ELSE 
+               ;now gripper should be vertical    
+               $FLAG[5]= TRUE        
+               TOWER_AREA.X = 608
+               TOWER_AREA.Y = 443
+            ENDIF
+            
+         ENDIF
+         
+        
+         ROBOT_STATES[10] = TRUE
+         
+         ;move to home position 
+         SPTP XHOME1 
+         
+         IF Is_Reachable(HOME) THEN
+            ;Clear boolean array of states
+            FOR Stage = 10 TO 2 STEP -1
+               ROBOT_STATES[Stage]= FALSE
+            ENDFOR  
+         ENDIF
+         
+         wait SEC 2
+        
+      endwhile
+      
+   endwhile
+   
+   RET = EKI_Clear("XmlServer")
+   
+END
+
+;The function to calcutate reset
+DEFFCT INT MOD (X: IN,Y: IN)
+   DECL INT X,Y
+   IF (X == 0) OR (Y == 0) THEN 
+      
+      RETURN -1
+      
+   ELSE 
+      
+      RETURN (X-Y*(X/Y))   
+      
+   ENDIF
+ENDFCT
+
+DEFFCT BOOL Is_Reachable(CartPos:in)
+   DECL E6POS CartPos
+   DECL E6Axis AxisPos, AxisVal
+   DECL INT Status
+   
+   Status = 0
+   AxisPos = $AXIS_ACT
+   AxisVal = Inverse(CartPos, AxisPos, Status)
+   
+   RETURN Status == 0
+ENDFCT

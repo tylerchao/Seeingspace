@@ -1,0 +1,2646 @@
+[
+    {
+        "id": "ee47ac4575fc7a53",
+        "type": "tab",
+        "label": "seeing-spaces",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "cc299a402f460f56",
+        "type": "debug",
+        "z": "ee47ac4575fc7a53",
+        "name": "debug mqtt output",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 850,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "4be426b1ef19e433",
+        "type": "function",
+        "z": "ee47ac4575fc7a53",
+        "name": "Level_number",
+        "func": "//show the current level of the Jenga Tower\nvar topic = msg.topic;\nif (topic === \"kuka/level\") {\n    return [msg, null];\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 840,
+        "y": 240,
+        "wires": [
+            [
+                "2e44e8e3a74b75bb"
+            ]
+        ]
+    },
+    {
+        "id": "09ba96e2e48a347d",
+        "type": "function",
+        "z": "ee47ac4575fc7a53",
+        "name": "Flag_No_blocks",
+        "func": "//show the current level of the Jenga Tower\nvar topic = msg.topic;\nif (topic === \"kuka/no_blocks\") {\n    return [msg, null];\n}\n\n    \n\n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 840,
+        "y": 380,
+        "wires": [
+            [
+                "e0a72709bf39d27a",
+                "ad8afd7b6dbb7501",
+                "262243602d049ecd"
+            ]
+        ]
+    },
+    {
+        "id": "2a10a8d5ba1a59ac",
+        "type": "function",
+        "z": "ee47ac4575fc7a53",
+        "name": "Tool_coord_x",
+        "func": "var topic = msg.topic;\nif (topic === \"kuka/tool/coord_x\") {\n    \n    global.set(\"tool_X\", msg.payload)\n    msg.payload = Math.round(msg.payload)\n    return [msg, null];\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 830,
+        "y": 660,
+        "wires": [
+            [
+                "a260967ecedc4c39",
+                "24722acc8bda4eeb"
+            ]
+        ]
+    },
+    {
+        "id": "7bd722bc801a663a",
+        "type": "function",
+        "z": "ee47ac4575fc7a53",
+        "name": "Tool_coord_y",
+        "func": "var topic = msg.topic;\nif (topic === \"kuka/tool/coord_y\") {\n    \n    global.set(\"tool_Y\", msg.payload)\n    msg.payload = Math.round(msg.payload)\n    return [msg, null];\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 830,
+        "y": 720,
+        "wires": [
+            [
+                "0c585a28acc959dc",
+                "956c733731300640"
+            ]
+        ]
+    },
+    {
+        "id": "947028091860fadc",
+        "type": "function",
+        "z": "ee47ac4575fc7a53",
+        "name": "Tool_coord_z",
+        "func": "var topic = msg.topic;\nif (topic === \"kuka/tool/coord_z\") {\n    msg.topic = \"Tool Z\"\n    global.set(\"tool_z\", msg.payload)\n    msg.payload=Math.round(msg.payload)\n    return [msg, null];\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 830,
+        "y": 780,
+        "wires": [
+            [
+                "1ae96db903f7712c",
+                "fd6f1f1a31d12a03",
+                "b0b44d51dfd42451",
+                "3037b8727f4b0b53",
+                "f23d3c83c80b7e46"
+            ]
+        ]
+    },
+    {
+        "id": "b0309d9339d55764",
+        "type": "mqtt in",
+        "z": "ee47ac4575fc7a53",
+        "name": "",
+        "topic": "kuka/#",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "9dd0e4dcca52e280",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 290,
+        "y": 960,
+        "wires": [
+            [
+                "cc299a402f460f56",
+                "4be426b1ef19e433",
+                "2a10a8d5ba1a59ac",
+                "7bd722bc801a663a",
+                "947028091860fadc",
+                "404b48391a83c405",
+                "796f5001d75e6d94",
+                "608b35f3e19b56b3",
+                "3d59514b734400e2",
+                "4d4356dced0bc5bf",
+                "b626e6bec7143a5c",
+                "09ba96e2e48a347d"
+            ]
+        ]
+    },
+    {
+        "id": "ce990c9bb54937c3",
+        "type": "inject",
+        "z": "ee47ac4575fc7a53",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 260,
+        "y": 3980,
+        "wires": [
+            [
+                "61d1212c64c828a9"
+            ]
+        ]
+    },
+    {
+        "id": "404b48391a83c405",
+        "type": "function",
+        "z": "ee47ac4575fc7a53",
+        "name": "Block_coord_x",
+        "func": "var topic = msg.topic;\nif (topic === \"kuka/block/coord_x\") {\n    \n    global.set(\"block_x\", msg.payload)\n\n\n    return [msg, null];\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 840,
+        "y": 1320,
+        "wires": [
+            [
+                "3e38ec6d32cd443b",
+                "23ee850bd2a577e4"
+            ]
+        ]
+    },
+    {
+        "id": "796f5001d75e6d94",
+        "type": "function",
+        "z": "ee47ac4575fc7a53",
+        "name": "Block_coord_y",
+        "func": "var topic = msg.topic;\nif (topic === \"kuka/block/coord_y\") {\n    global.set(\"block_y\", msg.payload)\n    return [msg, null];\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 840,
+        "y": 1260,
+        "wires": [
+            [
+                "5880eba2ad0ca8c1",
+                "3e38ec6d32cd443b"
+            ]
+        ]
+    },
+    {
+        "id": "608b35f3e19b56b3",
+        "type": "function",
+        "z": "ee47ac4575fc7a53",
+        "name": "Block_coord_z",
+        "func": "var topic = msg.topic;\nif (topic === \"kuka/block/coord_z\") {\n    msg.topic = \"Block Z\"\n    global.set(\"block_z\", msg.payload)\n    return [msg, null];\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 840,
+        "y": 1200,
+        "wires": [
+            [
+                "340e12aaef9d9e71",
+                "b0b44d51dfd42451",
+                "3037b8727f4b0b53"
+            ]
+        ]
+    },
+    {
+        "id": "3d59514b734400e2",
+        "type": "function",
+        "z": "ee47ac4575fc7a53",
+        "name": "Block angle ",
+        "func": "var topic = msg.topic;\nif (topic === \"kuka/block/angle\") {\n    return [msg, null];\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 830,
+        "y": 1480,
+        "wires": [
+            [
+                "1b227fdadfa8cd90",
+                "2e6c396d7fb8cdea"
+            ]
+        ]
+    },
+    {
+        "id": "4d4356dced0bc5bf",
+        "type": "function",
+        "z": "ee47ac4575fc7a53",
+        "name": "Decide_Program_states",
+        "func": "var topic = msg.topic;\n\nif (topic === \"kuka/program_state\") {\n    global.set(\"program_state\", msg.payload)\n    if (msg.payload === \"build_tower\"){\n\n        return { payload: \"program_state_v2/build_tower.jpg\"} \n    } \n    else if (msg.payload === \"calibrating\"){\n        return { payload: \"program_state_v2/calibrating.jpg\"} \n    } \n    else if (msg.payload === \"clamping\") {\n        return { payload: \"program_state_v2/clamping.jpg\" }\n    } \n    else if (msg.payload === \"move_to_calib_area\") {\n        return { payload: \"program_state_v2/move_to_calib_area.jpg\" }\n    } \n    else if (msg.payload === \"move_to_home\") {\n        return { payload: \"program_state_v2/move_to_home.jpg\" }\n    } \n    else if (msg.payload === \"home\") {\n        return { payload: \"program_state_v2/home.jpg\" }\n    }\n    else if (msg.payload === \"move_to_target\") {\n        return { payload: \"program_state_v2/move_to_target.jpg\" }\n    } \n    else if (msg.payload === \"move_to_tower_area\") {\n        return { payload: \"program_state_v2/move_to_tower_area.jpg\" }\n    } \n    else if (msg.payload === \"wait_for_data\") {\n        return { payload: \"program_state_v2/wait_for_data.jpg\" }\n    } \n    else if (msg.payload === \"wait_for_connection\") {\n        return { payload: \"program_state_v2/wait_for_connection.jpg\" }\n    }  \n    else {\n        return { payload: \"program_state_v2/state_no_color.jpg\" }\n    }\n\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 870,
+        "y": 1680,
+        "wires": [
+            [
+                "9d2d84361660c4e4",
+                "077417896368f0e4"
+            ]
+        ]
+    },
+    {
+        "id": "b626e6bec7143a5c",
+        "type": "function",
+        "z": "ee47ac4575fc7a53",
+        "name": "Gripper_state",
+        "func": "//show the current level of the Jenga Tower\nvar topic = msg.topic;\nif (topic === \"kuka/gripper_state\") {\n    return [msg, null];\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 840,
+        "y": 520,
+        "wires": [
+            [
+                "79adbcfb5726267d",
+                "7fef98d97a840888"
+            ]
+        ]
+    },
+    {
+        "id": "f6916d42cfecb9d2",
+        "type": "debug",
+        "z": "ee47ac4575fc7a53",
+        "name": "debug 9",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1440,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "b0b44d51dfd42451",
+        "type": "function",
+        "z": "ee47ac4575fc7a53",
+        "name": "Warning ",
+        "func": "var tool_z=global.get(\"tool_z\")\nvar block_z = global.get(\"block_z\")\nvar state = global.get(\"program_state\")\nvar flag = global.get(\"flag\")\n\nif (Math.abs(tool_z - block_z) < 100) {\n         msg.payload = \"Kuka arm is approaching\"\n            return msg\n  }\n\n\n\n\n\n//if(state == \"Clamping\"){\n//   if (Math.abs(tool_z - block_z) < 100) {\n//      msg.payload = \"Kuka arm is approaching\"\n//      return msg\n//   }\n//}\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1100,
+        "y": 1040,
+        "wires": [
+            [
+                "759f5190a34522e6",
+                "f6916d42cfecb9d2",
+                "ed972dd895bf9dbb"
+            ]
+        ]
+    },
+    {
+        "id": "24722acc8bda4eeb",
+        "type": "ui_text",
+        "z": "ee47ac4575fc7a53",
+        "group": "dfaa331a38f34ccf",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "Tool X coordinate :",
+        "label": "Tool X coordinate :",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 1130,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "0c585a28acc959dc",
+        "type": "ui_text",
+        "z": "ee47ac4575fc7a53",
+        "group": "dfaa331a38f34ccf",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Tool Y coordinate :",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 1130,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "1ae96db903f7712c",
+        "type": "ui_text",
+        "z": "ee47ac4575fc7a53",
+        "group": "dfaa331a38f34ccf",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Tool Z coordinate : ",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 1130,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "5880eba2ad0ca8c1",
+        "type": "ui_text",
+        "z": "ee47ac4575fc7a53",
+        "group": "fed4279ee37bddb0",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Block Y coordinate : ",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 1080,
+        "y": 1260,
+        "wires": []
+    },
+    {
+        "id": "340e12aaef9d9e71",
+        "type": "ui_text",
+        "z": "ee47ac4575fc7a53",
+        "group": "fed4279ee37bddb0",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Block Z coordinate :",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 1080,
+        "y": 1200,
+        "wires": []
+    },
+    {
+        "id": "1b227fdadfa8cd90",
+        "type": "ui_text",
+        "z": "ee47ac4575fc7a53",
+        "group": "f13e9a0548ef957c",
+        "order": 4,
+        "width": "0",
+        "height": "0",
+        "name": "",
+        "label": "Block Angle :",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 1050,
+        "y": 1480,
+        "wires": []
+    },
+    {
+        "id": "79adbcfb5726267d",
+        "type": "ui_text",
+        "z": "ee47ac4575fc7a53",
+        "group": "0f10fc221eda0cff",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Gripper state :",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 1100,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "2e6c396d7fb8cdea",
+        "type": "ui_gauge",
+        "z": "ee47ac4575fc7a53",
+        "name": "",
+        "group": "f13e9a0548ef957c",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "gtype": "donut",
+        "title": "Block Angle Graphical Display",
+        "label": "deg",
+        "format": "{{value}}",
+        "min": "-180",
+        "max": "180",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1110,
+        "y": 1540,
+        "wires": []
+    },
+    {
+        "id": "fd6f1f1a31d12a03",
+        "type": "ui_gauge",
+        "z": "ee47ac4575fc7a53",
+        "name": "",
+        "group": "6796d128a34d530a",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "gtype": "wave",
+        "title": "Z-axis ",
+        "label": "mm",
+        "format": "{{value}}",
+        "min": "64",
+        "max": "894",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1090,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "3037b8727f4b0b53",
+        "type": "ui_chart",
+        "z": "ee47ac4575fc7a53",
+        "name": "",
+        "group": "6796d128a34d530a",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "Comparison_Z coordinate",
+        "chartType": "bar",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "1000",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#0785df",
+            "#db0bea",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1150,
+        "y": 960,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ed972dd895bf9dbb",
+        "type": "ui_audio",
+        "z": "ee47ac4575fc7a53",
+        "name": "",
+        "group": "0f10fc221eda0cff",
+        "voice": "Samantha",
+        "always": false,
+        "x": 1440,
+        "y": 1020,
+        "wires": []
+    },
+    {
+        "id": "759f5190a34522e6",
+        "type": "ui_toast",
+        "z": "ee47ac4575fc7a53",
+        "position": "top right",
+        "displayTime": "",
+        "highlight": "yellow",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "",
+        "name": "",
+        "x": 1470,
+        "y": 1100,
+        "wires": []
+    },
+    {
+        "id": "e0a72709bf39d27a",
+        "type": "ui_led",
+        "z": "ee47ac4575fc7a53",
+        "order": 4,
+        "group": "fed4279ee37bddb0",
+        "width": 0,
+        "height": 0,
+        "label": "No blocks :",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ff0000",
+                "value": "True",
+                "valueType": "str"
+            },
+            {
+                "color": "#000000",
+                "value": "False",
+                "valueType": "str"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "Blocks_On_Board",
+        "x": 1270,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "61d1212c64c828a9",
+        "type": "ui_media",
+        "z": "ee47ac4575fc7a53",
+        "group": "69c6d945d8dead7f",
+        "name": "The picture of Jenga",
+        "width": "6",
+        "height": "12",
+        "order": 7,
+        "category": "Jenga display",
+        "file": "Jenga-model.jpeg",
+        "layout": "center",
+        "showcontrols": false,
+        "loop": true,
+        "onstart": false,
+        "scope": "local",
+        "tooltip": "",
+        "x": 480,
+        "y": 3980,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9d2d84361660c4e4",
+        "type": "ui_media",
+        "z": "ee47ac4575fc7a53",
+        "group": "c5744fbe7fae6294",
+        "name": "",
+        "width": "24",
+        "height": "3",
+        "order": 2,
+        "category": "program_state_v2",
+        "file": "move_to_tower_area.jpg",
+        "layout": "adjust",
+        "showcontrols": true,
+        "loop": true,
+        "onstart": false,
+        "scope": "local",
+        "tooltip": "",
+        "x": 1150,
+        "y": 1680,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e73b8c71bf0dd108",
+        "type": "debug",
+        "z": "ee47ac4575fc7a53",
+        "name": "debug 15",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 420,
+        "y": 3680,
+        "wires": []
+    },
+    {
+        "id": "df0d8edf05a224ca",
+        "type": "ui_iframe",
+        "z": "ee47ac4575fc7a53",
+        "group": "3cb4f8717242dc12",
+        "name": "",
+        "order": 1,
+        "width": "6",
+        "height": "5",
+        "url": "http://172.16.6.18:5001/video",
+        "origin": "*",
+        "scale": 100,
+        "x": 230,
+        "y": 3680,
+        "wires": [
+            [
+                "e73b8c71bf0dd108"
+            ]
+        ]
+    },
+    {
+        "id": "1951fc4085f016a2",
+        "type": "ui_audio",
+        "z": "ee47ac4575fc7a53",
+        "name": "",
+        "group": "0f10fc221eda0cff",
+        "voice": "Samantha",
+        "always": false,
+        "x": 1500,
+        "y": 1560,
+        "wires": []
+    },
+    {
+        "id": "077417896368f0e4",
+        "type": "function",
+        "z": "ee47ac4575fc7a53",
+        "name": "Decide_Program_states",
+        "func": "var payload = msg.payload;\nif(payload === \"\")\nvar topic = msg.topic;\n\nif (topic === \"kuka/program_state\") {\n    global.set(\"program_state\", msg.payload)\n    if (msg.payload === \"build_tower\"){\n\n        return { payload: \"program_state_v2/build_tower.jpg\"} \n    } \n    else if (msg.payload === \"calibrating\"){\n        return { payload: \"program_state_v2/calibrating.jpg\"} \n    } \n    else if (msg.payload === \"clamping\") {\n        return { payload: \"program_state_v2/clamping.jpg\" }\n    } \n    else if (msg.payload === \"move_to_calib_area\") {\n        return { payload: \"program_state_v2/move_to_calib_area.jpg\" }\n    } \n    else if (msg.payload === \"move_to_home\") {\n        return { payload: \"program_state_v2/move_to_home.jpg\" }\n    } \n    else if (msg.payload === \"home\") {\n        return { payload: \"program_state_v2/home.jpg\" }\n    }\n    else if (msg.payload === \"move_to_target\") {\n        return { payload: \"program_state_v2/move_to_target.jpg\" }\n    } \n    else if (msg.payload === \"move_to_tower_area\") {\n        return { payload: \"program_state_v2/move_to_tower_area.jpg\" }\n    } \n    else if (msg.payload === \"wait_for_data\") {\n        return { payload: \"program_state_v2/wait_for_data.jpg\" }\n    } \n    else if (msg.payload === \"wait_for_connection\") {\n        return { payload: \"program_state_v2/wait_for_connection.jpg\" }\n    }  \n    else {\n        return { payload: \"program_state_v2/state_no_color.jpg\" }\n    }\n\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1210,
+        "y": 1740,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0dd3f8a8b3ac1449",
+        "type": "mqtt out",
+        "z": "ee47ac4575fc7a53",
+        "name": "",
+        "topic": "",
+        "qos": "2",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "9dd0e4dcca52e280",
+        "x": 790,
+        "y": 2040,
+        "wires": []
+    },
+    {
+        "id": "c79f5506a76161f8",
+        "type": "ui_button",
+        "z": "ee47ac4575fc7a53",
+        "name": "",
+        "group": "cbf60cc61690cd27",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Pause",
+        "tooltip": "",
+        "color": "white",
+        "bgcolor": "",
+        "className": "",
+        "icon": "pause",
+        "payload": "pause",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 230,
+        "y": 1980,
+        "wires": [
+            [
+                "2e3450b0fd07ed28"
+            ]
+        ]
+    },
+    {
+        "id": "713caae8c1ab4b9d",
+        "type": "ui_button",
+        "z": "ee47ac4575fc7a53",
+        "name": "",
+        "group": "cbf60cc61690cd27",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Play",
+        "tooltip": "",
+        "color": "white",
+        "bgcolor": "",
+        "className": "",
+        "icon": "play_arrow",
+        "payload": "play",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 230,
+        "y": 2040,
+        "wires": [
+            [
+                "2e3450b0fd07ed28"
+            ]
+        ]
+    },
+    {
+        "id": "7b17f231c3dab0db",
+        "type": "ui_button",
+        "z": "ee47ac4575fc7a53",
+        "name": "",
+        "group": "cbf60cc61690cd27",
+        "order": 7,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "5s backward",
+        "tooltip": "",
+        "color": "white",
+        "bgcolor": "",
+        "className": "",
+        "icon": "replay_5",
+        "payload": "five sec backward",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 250,
+        "y": 2100,
+        "wires": [
+            [
+                "2e3450b0fd07ed28"
+            ]
+        ]
+    },
+    {
+        "id": "e26f445a265d16a7",
+        "type": "ui_button",
+        "z": "ee47ac4575fc7a53",
+        "name": "",
+        "group": "cbf60cc61690cd27",
+        "order": 8,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "5s forward",
+        "tooltip": "",
+        "color": "white",
+        "bgcolor": "",
+        "className": "",
+        "icon": "forward_5",
+        "payload": "five sec forward",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 250,
+        "y": 2160,
+        "wires": [
+            [
+                "2e3450b0fd07ed28"
+            ]
+        ]
+    },
+    {
+        "id": "3f3d8dbb708a3365",
+        "type": "ui_button",
+        "z": "ee47ac4575fc7a53",
+        "name": "",
+        "group": "cbf60cc61690cd27",
+        "order": 10,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Stop Replay",
+        "tooltip": "",
+        "color": "white",
+        "bgcolor": "red",
+        "className": "",
+        "icon": "stop",
+        "payload": "stop replay",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 250,
+        "y": 2220,
+        "wires": [
+            [
+                "2e3450b0fd07ed28",
+                "37d788d1a506bdb3"
+            ]
+        ]
+    },
+    {
+        "id": "d7d564f58cecf866",
+        "type": "debug",
+        "z": "ee47ac4575fc7a53",
+        "name": "debug 20",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1400,
+        "y": 2040,
+        "wires": []
+    },
+    {
+        "id": "063103c363808281",
+        "type": "mqtt in",
+        "z": "ee47ac4575fc7a53",
+        "name": "",
+        "topic": "playback_end/#",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "9dd0e4dcca52e280",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 1080,
+        "y": 2040,
+        "wires": [
+            [
+                "d7d564f58cecf866",
+                "952425129a92faa0",
+                "aef1f69ae7442517"
+            ]
+        ]
+    },
+    {
+        "id": "2e3450b0fd07ed28",
+        "type": "function",
+        "z": "ee47ac4575fc7a53",
+        "name": "Given a topic for replay button",
+        "func": "msg.topic = \"mqtt-replay-record/replay\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 2040,
+        "wires": [
+            [
+                "0dd3f8a8b3ac1449"
+            ]
+        ]
+    },
+    {
+        "id": "23cb7700ededc03f",
+        "type": "ui_button",
+        "z": "ee47ac4575fc7a53",
+        "name": "",
+        "group": "cbf60cc61690cd27",
+        "order": 9,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "start beginning",
+        "tooltip": "",
+        "color": "white",
+        "bgcolor": "",
+        "className": "",
+        "icon": "replay",
+        "payload": "start beginning",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 260,
+        "y": 2280,
+        "wires": [
+            [
+                "2e3450b0fd07ed28"
+            ]
+        ]
+    },
+    {
+        "id": "af5a711a2d793d4f",
+        "type": "debug",
+        "z": "ee47ac4575fc7a53",
+        "name": "debug 16",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1500,
+        "y": 2640,
+        "wires": []
+    },
+    {
+        "id": "707a19372ccd3246",
+        "type": "ui_button",
+        "z": "ee47ac4575fc7a53",
+        "name": "",
+        "group": "b6152da76cbc1dce",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Record mqtt ",
+        "tooltip": "",
+        "color": "white",
+        "bgcolor": "blue",
+        "className": "",
+        "icon": "fiber_manual_record",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 250,
+        "y": 2640,
+        "wires": [
+            [
+                "a9fc4c9f8f24ba62",
+                "e748d19ce12aef93"
+            ]
+        ]
+    },
+    {
+        "id": "b6c231ee0ec9259b",
+        "type": "debug",
+        "z": "ee47ac4575fc7a53",
+        "name": "debug 19",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 820,
+        "y": 3000,
+        "wires": []
+    },
+    {
+        "id": "3cd7b15c8262a00a",
+        "type": "exec",
+        "z": "ee47ac4575fc7a53",
+        "command": "pkill -SIGINT -f \"mqtt-record\"",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 540,
+        "y": 3000,
+        "wires": [
+            [],
+            [
+                "b6c231ee0ec9259b"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "b31448651de0fc51",
+        "type": "ui_button",
+        "z": "ee47ac4575fc7a53",
+        "name": "",
+        "group": "b6152da76cbc1dce",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Stop Record",
+        "tooltip": "",
+        "color": "white",
+        "bgcolor": "red",
+        "className": "",
+        "icon": "stop",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 250,
+        "y": 2960,
+        "wires": [
+            [
+                "3cd7b15c8262a00a",
+                "4dc52f51215deca9"
+            ]
+        ]
+    },
+    {
+        "id": "5e341395a7660e88",
+        "type": "ui_text",
+        "z": "ee47ac4575fc7a53",
+        "group": "b6152da76cbc1dce",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Control panel ",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 260,
+        "y": 2880,
+        "wires": []
+    },
+    {
+        "id": "fa0a429decf28176",
+        "type": "ui_text",
+        "z": "ee47ac4575fc7a53",
+        "group": "cbf60cc61690cd27",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Control panel ",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 260,
+        "y": 1920,
+        "wires": []
+    },
+    {
+        "id": "9fb6298e5f13b818",
+        "type": "ui_audio",
+        "z": "ee47ac4575fc7a53",
+        "name": "",
+        "group": "cbf60cc61690cd27",
+        "voice": "Samantha",
+        "always": true,
+        "x": 700,
+        "y": 2280,
+        "wires": []
+    },
+    {
+        "id": "37d788d1a506bdb3",
+        "type": "function",
+        "z": "ee47ac4575fc7a53",
+        "name": "function 13",
+        "func": "msg.payload = \"stop replaying\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 2220,
+        "wires": [
+            [
+                "aef1f69ae7442517"
+            ]
+        ]
+    },
+    {
+        "id": "1012716ef66ccb4c",
+        "type": "ui_audio",
+        "z": "ee47ac4575fc7a53",
+        "name": "Audio for playback ending ",
+        "group": "cbf60cc61690cd27",
+        "voice": "Samantha",
+        "always": true,
+        "x": 1460,
+        "y": 1980,
+        "wires": []
+    },
+    {
+        "id": "952425129a92faa0",
+        "type": "ui_toast",
+        "z": "ee47ac4575fc7a53",
+        "position": "top right",
+        "displayTime": "1",
+        "highlight": "red",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "",
+        "name": "Notification for playback ending",
+        "x": 1470,
+        "y": 2100,
+        "wires": []
+    },
+    {
+        "id": "578f334853a0b955",
+        "type": "ui_dropdown",
+        "z": "ee47ac4575fc7a53",
+        "name": "",
+        "label": "Choose a file",
+        "tooltip": "list",
+        "place": "select",
+        "group": "cbf60cc61690cd27",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "multiple": false,
+        "options": [],
+        "payload": "",
+        "topic": "playback_files",
+        "topicType": "str",
+        "className": "",
+        "x": 1000,
+        "y": 2920,
+        "wires": [
+            [
+                "2811f8b8d22fda40",
+                "24ffdc26ed648061"
+            ]
+        ]
+    },
+    {
+        "id": "b6354d36e1a41fd6",
+        "type": "debug",
+        "z": "ee47ac4575fc7a53",
+        "name": "debug 21",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 900,
+        "y": 2520,
+        "wires": []
+    },
+    {
+        "id": "5e51f8666dea8235",
+        "type": "mqtt in",
+        "z": "ee47ac4575fc7a53",
+        "name": "",
+        "topic": "playback_files/#",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "9dd0e4dcca52e280",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 1300,
+        "y": 2340,
+        "wires": [
+            [
+                "9c2aeaafab9ab70c"
+            ]
+        ]
+    },
+    {
+        "id": "9c2aeaafab9ab70c",
+        "type": "function",
+        "z": "ee47ac4575fc7a53",
+        "name": "separate the incoming topic name",
+        "func": "//incoming topic is of form playback_files\nlet files = flow.get(\"playback_files\") || {};\nvar t_in = msg.topic.split(\"/\");\nlet file = msg.device = t_in[1]; // get file name \nfiles[file] = msg.payload;\nconst keys = Object.keys(files);\nmsg.options = keys;\nflow.set(\"playback_files\", files);\n\nreturn msg;  ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1580,
+        "y": 2340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f56104dca8a35e73",
+        "type": "function",
+        "z": "ee47ac4575fc7a53",
+        "name": "concatenate strings",
+        "func": "var topic = msg.topic;\nvar add_string = \" -i \";\nvar filename = global.get(\"filename\")\n\nmsg.payload = add_string + filename;\n\n\nreturn [msg, null];\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 2520,
+        "wires": [
+            [
+                "b6354d36e1a41fd6",
+                "e77c9282e6d164ee"
+            ]
+        ]
+    },
+    {
+        "id": "5f71e8b5a0df0fbf",
+        "type": "debug",
+        "z": "ee47ac4575fc7a53",
+        "name": "debug 25",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1480,
+        "y": 2860,
+        "wires": []
+    },
+    {
+        "id": "0693dfe99a960a9d",
+        "type": "ui_button",
+        "z": "ee47ac4575fc7a53",
+        "name": "",
+        "group": "cbf60cc61690cd27",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Playback mqtt message ",
+        "tooltip": "",
+        "color": "white",
+        "bgcolor": "blue",
+        "className": "",
+        "icon": "playlist_play",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 290,
+        "y": 2460,
+        "wires": [
+            [
+                "f56104dca8a35e73",
+                "6aa8de0e12b5cd10"
+            ]
+        ]
+    },
+    {
+        "id": "2811f8b8d22fda40",
+        "type": "function",
+        "z": "ee47ac4575fc7a53",
+        "name": "set file as a global variable",
+        "func": "global.set(\"filename\", msg.payload)\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1260,
+        "y": 2860,
+        "wires": [
+            [
+                "5f71e8b5a0df0fbf"
+            ]
+        ]
+    },
+    {
+        "id": "0a2afec8a46bed3b",
+        "type": "ui_led",
+        "z": "ee47ac4575fc7a53",
+        "order": 3,
+        "group": "b6152da76cbc1dce",
+        "width": 0,
+        "height": 0,
+        "label": "Now is recording ",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ff0000",
+                "value": "true",
+                "valueType": "bool"
+            },
+            {
+                "color": "#808080",
+                "value": "false",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "Led of recording",
+        "x": 840,
+        "y": 2800,
+        "wires": []
+    },
+    {
+        "id": "a9fc4c9f8f24ba62",
+        "type": "change",
+        "z": "ee47ac4575fc7a53",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 520,
+        "y": 2740,
+        "wires": [
+            [
+                "0a2afec8a46bed3b"
+            ]
+        ]
+    },
+    {
+        "id": "4dc52f51215deca9",
+        "type": "change",
+        "z": "ee47ac4575fc7a53",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "false",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 520,
+        "y": 2880,
+        "wires": [
+            [
+                "0a2afec8a46bed3b"
+            ]
+        ]
+    },
+    {
+        "id": "3514d0d4216a532f",
+        "type": "ui_led",
+        "z": "ee47ac4575fc7a53",
+        "order": 3,
+        "group": "cbf60cc61690cd27",
+        "width": 0,
+        "height": 0,
+        "label": "Now is replaying ",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#008000",
+                "value": "true",
+                "valueType": "bool"
+            },
+            {
+                "color": "#808080",
+                "value": "false",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "Led for stop replaying ",
+        "x": 1040,
+        "y": 2220,
+        "wires": []
+    },
+    {
+        "id": "6aa8de0e12b5cd10",
+        "type": "change",
+        "z": "ee47ac4575fc7a53",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 720,
+        "y": 2460,
+        "wires": [
+            [
+                "3514d0d4216a532f"
+            ]
+        ]
+    },
+    {
+        "id": "aef1f69ae7442517",
+        "type": "change",
+        "z": "ee47ac4575fc7a53",
+        "name": "activate stop replay button",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "false",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 760,
+        "y": 2220,
+        "wires": [
+            [
+                "3514d0d4216a532f"
+            ]
+        ]
+    },
+    {
+        "id": "b17e785030cc18ce",
+        "type": "comment",
+        "z": "ee47ac4575fc7a53",
+        "name": "Subscribe to kuka robot experiment",
+        "info": "This mqtt-in subscribes topics with \"kuka/\" from the kuka robot experiment. \n ",
+        "x": 240,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "4dced8066e4a5b8e",
+        "type": "comment",
+        "z": "ee47ac4575fc7a53",
+        "name": "The current building level ",
+        "info": "",
+        "x": 870,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "56fb4f79d9d405f3",
+        "type": "comment",
+        "z": "ee47ac4575fc7a53",
+        "name": "A flag of showing no blocks",
+        "info": "",
+        "x": 880,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "e05f046756a3374a",
+        "type": "comment",
+        "z": "ee47ac4575fc7a53",
+        "name": "The state of the gripper",
+        "info": "",
+        "x": 860,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "69cefbcb3866edd0",
+        "type": "comment",
+        "z": "ee47ac4575fc7a53",
+        "name": "Gripper coordinate",
+        "info": "",
+        "x": 850,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "f5250b4a41351b60",
+        "type": "comment",
+        "z": "ee47ac4575fc7a53",
+        "name": "Block coordinates",
+        "info": "",
+        "x": 850,
+        "y": 1140,
+        "wires": []
+    },
+    {
+        "id": "c46a2caff15260ff",
+        "type": "comment",
+        "z": "ee47ac4575fc7a53",
+        "name": "Compare the z axis ",
+        "info": "",
+        "x": 1130,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "5b55cc3c4e3d6b18",
+        "type": "comment",
+        "z": "ee47ac4575fc7a53",
+        "name": "The orientation of the block on board",
+        "info": "",
+        "x": 910,
+        "y": 1420,
+        "wires": []
+    },
+    {
+        "id": "7ca2310a2fc95036",
+        "type": "comment",
+        "z": "ee47ac4575fc7a53",
+        "name": "Program states ",
+        "info": "",
+        "x": 840,
+        "y": 1620,
+        "wires": []
+    },
+    {
+        "id": "fc5810f615b99476",
+        "type": "comment",
+        "z": "ee47ac4575fc7a53",
+        "name": "Basler camera ",
+        "info": "",
+        "x": 250,
+        "y": 3620,
+        "wires": []
+    },
+    {
+        "id": "c93bdf451c8485d1",
+        "type": "comment",
+        "z": "ee47ac4575fc7a53",
+        "name": "The control button for Replay ",
+        "info": "",
+        "x": 300,
+        "y": 1860,
+        "wires": []
+    },
+    {
+        "id": "d4a40902d0865e56",
+        "type": "comment",
+        "z": "ee47ac4575fc7a53",
+        "name": "demo pics ",
+        "info": "",
+        "x": 240,
+        "y": 3920,
+        "wires": []
+    },
+    {
+        "id": "9e1ac77d7eac5c21",
+        "type": "comment",
+        "z": "ee47ac4575fc7a53",
+        "name": "A button to play a message",
+        "info": "",
+        "x": 300,
+        "y": 2400,
+        "wires": []
+    },
+    {
+        "id": "5bdb66f7826fd2ae",
+        "type": "comment",
+        "z": "ee47ac4575fc7a53",
+        "name": "Subscribe to playback_finish",
+        "info": "",
+        "x": 1120,
+        "y": 1980,
+        "wires": []
+    },
+    {
+        "id": "01d19249af702e29",
+        "type": "comment",
+        "z": "ee47ac4575fc7a53",
+        "name": "A button for starting record ",
+        "info": "",
+        "x": 290,
+        "y": 2580,
+        "wires": []
+    },
+    {
+        "id": "b13dfed379117eed",
+        "type": "comment",
+        "z": "ee47ac4575fc7a53",
+        "name": "The control button for Record",
+        "info": "kill the record process",
+        "x": 300,
+        "y": 2820,
+        "wires": []
+    },
+    {
+        "id": "5e6a7a2f1e7ad33c",
+        "type": "comment",
+        "z": "ee47ac4575fc7a53",
+        "name": "mqtt for receive every record files ",
+        "info": "",
+        "x": 1350,
+        "y": 2280,
+        "wires": []
+    },
+    {
+        "id": "d8a518114e349d55",
+        "type": "comment",
+        "z": "ee47ac4575fc7a53",
+        "name": "Clear the buffer of playback list ",
+        "info": "",
+        "x": 1350,
+        "y": 2420,
+        "wires": []
+    },
+    {
+        "id": "37a791781079fd3f",
+        "type": "debug",
+        "z": "ee47ac4575fc7a53",
+        "name": "debug 26",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1980,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "a260967ecedc4c39",
+        "type": "function",
+        "z": "ee47ac4575fc7a53",
+        "name": "function 18",
+        "func": "msg.topic = \"Tool X\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1370,
+        "y": 600,
+        "wires": [
+            [
+                "837d41d5ed6745a4"
+            ]
+        ]
+    },
+    {
+        "id": "956c733731300640",
+        "type": "function",
+        "z": "ee47ac4575fc7a53",
+        "name": "function 19",
+        "func": "msg.topic = \"Tool Y\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1370,
+        "y": 660,
+        "wires": [
+            [
+                "837d41d5ed6745a4"
+            ]
+        ]
+    },
+    {
+        "id": "f23d3c83c80b7e46",
+        "type": "function",
+        "z": "ee47ac4575fc7a53",
+        "name": "function 20",
+        "func": "msg.topic = \"Tool Z\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1370,
+        "y": 720,
+        "wires": [
+            [
+                "837d41d5ed6745a4"
+            ]
+        ]
+    },
+    {
+        "id": "837d41d5ed6745a4",
+        "type": "ui_chart",
+        "z": "ee47ac4575fc7a53",
+        "name": "",
+        "group": "dfaa331a38f34ccf",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "label": "KUKA gripper coordinate variation",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "60",
+        "ymax": "700",
+        "removeOlder": "20",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "1",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#5eee20",
+            "#f9f21f",
+            "#ff2600",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1720,
+        "y": 620,
+        "wires": [
+            [
+                "37a791781079fd3f"
+            ]
+        ]
+    },
+    {
+        "id": "2e44e8e3a74b75bb",
+        "type": "ui_level",
+        "z": "ee47ac4575fc7a53",
+        "group": "b2695e7829c1030b",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Tower Layer",
+        "colorHi": "#e60000",
+        "colorWarn": "#ff9900",
+        "colorNormal": "#00b33c",
+        "colorOff": "#595959",
+        "min": "1",
+        "max": "18",
+        "segWarn": "6",
+        "segHigh": "12",
+        "unit": "",
+        "layout": "sv",
+        "channelA": "",
+        "channelB": "",
+        "decimals": 0,
+        "animations": "soft",
+        "shape": "3",
+        "colorschema": "fixed",
+        "textoptions": "custom",
+        "colorText": "#eeeeee",
+        "fontLabel": "1.5",
+        "fontValue": "5",
+        "fontSmall": "1",
+        "colorFromTheme": true,
+        "textAnimations": false,
+        "hideValue": false,
+        "tickmode": "off",
+        "peakmode": false,
+        "property": "payload",
+        "peaktime": 3000,
+        "x": 1090,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "b4e9b83cbafcf504",
+        "type": "debug",
+        "z": "ee47ac4575fc7a53",
+        "name": "debug 27",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1960,
+        "y": 1260,
+        "wires": []
+    },
+    {
+        "id": "3e38ec6d32cd443b",
+        "type": "function",
+        "z": "ee47ac4575fc7a53",
+        "name": "function 21",
+        "func": "//create a object\nvar array = []\n\nvar new_object = {}\n\nvar x_coord = global.get(\"block_x\")\nvar y_coord = global.get(\"block_y\")\n\n\nnew_object = {\n    \"x\" : x_coord,\n    \"y\" : y_coord \n}\n\narray = [new_object]\n\n\nmsg.payload = new_object\nmsg.topic = \"add\"\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1530,
+        "y": 1260,
+        "wires": [
+            [
+                "72b032edaf0125b9"
+            ]
+        ]
+    },
+    {
+        "id": "72b032edaf0125b9",
+        "type": "ui_template",
+        "z": "ee47ac4575fc7a53",
+        "group": "fed4279ee37bddb0",
+        "name": "blocks location ",
+        "order": 5,
+        "width": "7",
+        "height": "6",
+        "format": "<div class=\"chart-container\" style=\"position: relative; height:100%; width:100%\">\n  <canvas id=\"block_board\"></canvas>\n</div>\n\n<script>\n  (function(scope) {\n    const chartData = {\n      datasets: [{\n        label: \"Blocks on Board\",\n        data: [],\n        backgroundColor: 'rgb(255,165,0)',\n        pointRadius: 8,\n      }],\n    };\n    \n    const config = {\n      type: 'scatter',\n      data: chartData,\n      options: {\n        maintainAspectRatio: false,\n        scales: {\n          x: {\n            type: 'linear',\n            position: 'bottom',\n            grid: {\n            color: 'rgb(211,211,211)' // Change the color value to your desired color for x-axis grid lines\n            },\n            ticks: {\n              color: 'rgb(211,211,211)' // Change the color value to your desired color for x-axis ticks\n            }\n          },\n          y: {\n            grid: {\n            color: 'rgb(211,211,211)' // Change the color value to your desired color for x-axis grid lines\n            },\n            ticks: {\n              color: 'rgb(211,211,211)' // Change the color value to your desired color for y-axis ticks\n            }\n          }\n        }\n      }\n    };\n\n    var myChart = new Chart(\n      document.getElementById('block_board'),\n      config\n    );\n\n    scope.$watch('msg', function(msg) {\n      if (msg) {\n        \n        if(msg.topic == \"add\") {\n          myChart.data.datasets[0].data.push(msg.payload);\n          myChart.update();\n        }        \n        if(msg.topic == \"set\") {\n          myChart.data.datasets[0].data = [...msg.payload];\n          myChart.update();\n        }\n      }\n    });\n  })(scope);\n</script>\n\n",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 1760,
+        "y": 1260,
+        "wires": [
+            [
+                "b4e9b83cbafcf504"
+            ]
+        ]
+    },
+    {
+        "id": "ad8afd7b6dbb7501",
+        "type": "debug",
+        "z": "ee47ac4575fc7a53",
+        "name": "debug 30",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1300,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "6e4052ee8cc26976",
+        "type": "change",
+        "z": "ee47ac4575fc7a53",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "[]",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1360,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "262243602d049ecd",
+        "type": "switch",
+        "z": "ee47ac4575fc7a53",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1190,
+        "y": 420,
+        "wires": [
+            [
+                "6e4052ee8cc26976"
+            ]
+        ]
+    },
+    {
+        "id": "7fef98d97a840888",
+        "type": "ui_statetrail",
+        "z": "ee47ac4575fc7a53",
+        "group": "0f10fc221eda0cff",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "gripper states",
+        "states": [
+            {
+                "state": "open",
+                "col": "#009933",
+                "t": "str",
+                "label": "open"
+            },
+            {
+                "state": "close",
+                "col": "#ee1111",
+                "t": "str",
+                "label": "close"
+            }
+        ],
+        "periodLimit": "10",
+        "periodLimitUnit": "1",
+        "timeformat": "HH:mm:ss",
+        "tickmarks": 4,
+        "exactticks": false,
+        "persist": false,
+        "legend": "3",
+        "combine": true,
+        "blanklabel": "gripper ",
+        "x": 1080,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "665771c58e33fa10",
+        "type": "ui_button",
+        "z": "ee47ac4575fc7a53",
+        "name": "",
+        "group": "fed4279ee37bddb0",
+        "order": 12,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "clear",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "[]",
+        "payloadType": "json",
+        "topic": "set",
+        "topicType": "str",
+        "x": 1710,
+        "y": 1180,
+        "wires": [
+            [
+                "72b032edaf0125b9"
+            ]
+        ]
+    },
+    {
+        "id": "88c16fe1fc4fba92",
+        "type": "comment",
+        "z": "ee47ac4575fc7a53",
+        "name": "show the tool coordinate in line graph",
+        "info": "",
+        "x": 1730,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "06298e52b6142e1d",
+        "type": "ui_iframe",
+        "z": "ee47ac4575fc7a53",
+        "group": "83a34b3c7fd62005",
+        "name": "",
+        "order": 1,
+        "width": "12",
+        "height": "9",
+        "url": "http://172.16.6.18:5000/video",
+        "origin": "*",
+        "scale": "99",
+        "x": 230,
+        "y": 3540,
+        "wires": [
+            [
+                "fab6ac875eb699e1"
+            ]
+        ]
+    },
+    {
+        "id": "fab6ac875eb699e1",
+        "type": "debug",
+        "z": "ee47ac4575fc7a53",
+        "name": "debug 32",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 440,
+        "y": 3540,
+        "wires": []
+    },
+    {
+        "id": "ac089c0769c8d6c9",
+        "type": "ui_switch",
+        "z": "ee47ac4575fc7a53",
+        "name": "",
+        "label": "Subscribe to Topic KuKa",
+        "tooltip": "",
+        "group": "eaf535a4b374025e",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 310,
+        "y": 3120,
+        "wires": [
+            [
+                "53df9ad7e8eb9dd1"
+            ]
+        ]
+    },
+    {
+        "id": "93ff402679dd1d1b",
+        "type": "ui_template",
+        "z": "ee47ac4575fc7a53",
+        "group": "eaf535a4b374025e",
+        "name": "",
+        "order": 3,
+        "width": "12",
+        "height": "8",
+        "format": "\n<style>\n    #message-container {\n        height: 500px;\n        width: 600px; \n        overflow-y: scroll;\n    }\n</style>\n\n<div id=\"message-container\">\n    <div ng-repeat=\"message in messages track by $index\">{{message}}</div>\n</div>\n\n\n<button ng-click=\"clearMessages()\">Clear Messages</button>\n\n\n<script>\n    (function(scope) {\n        // a empty message \n        scope.messages = [];\n\n        // $watch function: watch for changes in msg variable, a callback function msg\n        scope.$watch('msg', function(msg) {\n            if (msg) {\n                scope.messages.push(msg.payload);    // add the msg payload into array \n\n                // Scroll the container to the button\n                var container = document.getElementById('message-container');\n\n                // inorder to display the latest message\n                container.scrollTop = container.scrollHeight;\n            }\n        });\n\n        scope.clearMessages = function() {\n            scope.messages = [];\n        }\n\n\n\n\n    })(scope);\n</script>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 1400,
+        "y": 3200,
+        "wires": [
+            [
+                "770fc9ad03acf590"
+            ]
+        ]
+    },
+    {
+        "id": "e69d3af38c4edc65",
+        "type": "function",
+        "z": "ee47ac4575fc7a53",
+        "name": "function 23",
+        "func": "var topic = msg.topic;\nvar message = msg.payload;\nvar timestamp = new Date().toLocaleString();\nmsg.payload = topic + \": \" + message + \" (Time: \" + timestamp + \")\";\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1210,
+        "y": 3200,
+        "wires": [
+            [
+                "93ff402679dd1d1b"
+            ]
+        ]
+    },
+    {
+        "id": "770fc9ad03acf590",
+        "type": "debug",
+        "z": "ee47ac4575fc7a53",
+        "name": "debug 34",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1600,
+        "y": 3200,
+        "wires": []
+    },
+    {
+        "id": "747f2e48968ede50",
+        "type": "mqtt in",
+        "z": "ee47ac4575fc7a53",
+        "name": "dynamic",
+        "topic": "",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "9dd0e4dcca52e280",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 1,
+        "x": 920,
+        "y": 3200,
+        "wires": [
+            [
+                "e69d3af38c4edc65",
+                "ece2edcfe68798d3"
+            ]
+        ]
+    },
+    {
+        "id": "53df9ad7e8eb9dd1",
+        "type": "function",
+        "z": "ee47ac4575fc7a53",
+        "name": "function 24",
+        "func": "if(msg.payload === true) {\nmsg.topic = \"kuka/#\"\nmsg.action = \"subscribe\"\n    return msg;\n}else {\n    msg.topic = \"kuka/#\"\n    msg.action = \"unsubscribe\"\n    return msg;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 590,
+        "y": 3120,
+        "wires": [
+            [
+                "747f2e48968ede50"
+            ]
+        ]
+    },
+    {
+        "id": "ce5ef96811f626ac",
+        "type": "ui_switch",
+        "z": "ee47ac4575fc7a53",
+        "name": "",
+        "label": "Subscribe to Topic Replay control",
+        "tooltip": "",
+        "group": "eaf535a4b374025e",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 340,
+        "y": 3200,
+        "wires": [
+            [
+                "336b6a5a9e94b1df"
+            ]
+        ]
+    },
+    {
+        "id": "336b6a5a9e94b1df",
+        "type": "function",
+        "z": "ee47ac4575fc7a53",
+        "name": "function 25",
+        "func": "if(msg.payload === true) {\n    msg.topic = \"mqtt-replay-record/replay\"\n    msg.action = \"subscribe\"\n    return msg;\n}else {\n    msg.topic = \"mqtt-replay-record/replay\"\n    msg.action = \"unsubscribe\"\n    return msg;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 590,
+        "y": 3200,
+        "wires": [
+            [
+                "747f2e48968ede50"
+            ]
+        ]
+    },
+    {
+        "id": "3f79ea55ec2b1998",
+        "type": "comment",
+        "z": "ee47ac4575fc7a53",
+        "name": "Konftel camera ",
+        "info": "",
+        "x": 260,
+        "y": 3480,
+        "wires": []
+    },
+    {
+        "id": "ece2edcfe68798d3",
+        "type": "debug",
+        "z": "ee47ac4575fc7a53",
+        "name": "debug 35",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1100,
+        "y": 3280,
+        "wires": []
+    },
+    {
+        "id": "23ee850bd2a577e4",
+        "type": "ui_text",
+        "z": "ee47ac4575fc7a53",
+        "group": "fed4279ee37bddb0",
+        "order": 1,
+        "width": "0",
+        "height": "0",
+        "name": "",
+        "label": "Block X coordinate :",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 1080,
+        "y": 1320,
+        "wires": []
+    },
+    {
+        "id": "e748d19ce12aef93",
+        "type": "exec",
+        "z": "ee47ac4575fc7a53",
+        "command": "mqtt-record - b tcp://localhost:1883 -t \"kuka/#\"",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 620,
+        "y": 2660,
+        "wires": [
+            [],
+            [
+                "af5a711a2d793d4f"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "e77c9282e6d164ee",
+        "type": "exec",
+        "z": "ee47ac4575fc7a53",
+        "command": "mqtt-replay -b tcp://localhost:1883 ",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 860,
+        "y": 2580,
+        "wires": [
+            [
+                "af5a711a2d793d4f"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "7f22028d8fd4e84c",
+        "type": "readdir",
+        "z": "ee47ac4575fc7a53",
+        "name": "",
+        "dir": ".",
+        "as": "single",
+        "recursive": false,
+        "outproperty": "options",
+        "x": 820,
+        "y": 2920,
+        "wires": [
+            [
+                "578f334853a0b955"
+            ]
+        ]
+    },
+    {
+        "id": "24ffdc26ed648061",
+        "type": "debug",
+        "z": "ee47ac4575fc7a53",
+        "name": "debug 36",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1200,
+        "y": 2920,
+        "wires": []
+    },
+    {
+        "id": "2177fc08a8590abd",
+        "type": "debug",
+        "z": "ee47ac4575fc7a53",
+        "name": "debug 37",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 520,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "4fb98c702dae3e89",
+        "type": "inject",
+        "z": "ee47ac4575fc7a53",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 660,
+        "y": 2920,
+        "wires": [
+            [
+                "7f22028d8fd4e84c"
+            ]
+        ]
+    },
+    {
+        "id": "9dd0e4dcca52e280",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "dfaa331a38f34ccf",
+        "type": "ui_group",
+        "name": "Kuka Robot Coorinate",
+        "tab": "3020c5ec1faaab87",
+        "order": 6,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "fed4279ee37bddb0",
+        "type": "ui_group",
+        "name": "Monitor Blocks amount",
+        "tab": "3020c5ec1faaab87",
+        "order": 6,
+        "disp": true,
+        "width": "7",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "f13e9a0548ef957c",
+        "type": "ui_group",
+        "name": "Block coordinate",
+        "tab": "3020c5ec1faaab87",
+        "order": 9,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "0f10fc221eda0cff",
+        "type": "ui_group",
+        "name": "Info",
+        "tab": "3020c5ec1faaab87",
+        "order": 11,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "6796d128a34d530a",
+        "type": "ui_group",
+        "name": " Z-axis variation",
+        "tab": "3020c5ec1faaab87",
+        "order": 10,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "69c6d945d8dead7f",
+        "type": "ui_group",
+        "name": "Jenga picture",
+        "tab": "3020c5ec1faaab87",
+        "order": 13,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "c5744fbe7fae6294",
+        "type": "ui_group",
+        "name": "State_Diagram",
+        "tab": "3020c5ec1faaab87",
+        "order": 1,
+        "disp": true,
+        "width": "24",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "3cb4f8717242dc12",
+        "type": "ui_group",
+        "name": "Basler camera ",
+        "tab": "3020c5ec1faaab87",
+        "order": 5,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "cbf60cc61690cd27",
+        "type": "ui_group",
+        "name": "Mqtt-Replay",
+        "tab": "3020c5ec1faaab87",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "b6152da76cbc1dce",
+        "type": "ui_group",
+        "name": "Mqtt-Record",
+        "tab": "3020c5ec1faaab87",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "b2695e7829c1030b",
+        "type": "ui_group",
+        "name": "Tower stage",
+        "tab": "3020c5ec1faaab87",
+        "order": 11,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "83a34b3c7fd62005",
+        "type": "ui_group",
+        "name": "Konftel camera",
+        "tab": "3020c5ec1faaab87",
+        "order": 4,
+        "disp": true,
+        "width": "12",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "eaf535a4b374025e",
+        "type": "ui_group",
+        "name": "Mqtt message",
+        "tab": "3020c5ec1faaab87",
+        "order": 7,
+        "disp": true,
+        "width": "12",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "3020c5ec1faaab87",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]

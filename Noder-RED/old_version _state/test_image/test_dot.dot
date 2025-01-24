@@ -1,0 +1,56 @@
+digraph G {
+    rankdir = LR;
+    splines = curved;
+    subgraph cluster0 {
+        graph [label = "Robot_States_Diagram"; margin = 30; fontsize = 60;];
+        
+        edge [splines = curved;];
+        
+        node [shape = ellipse; style = filled; fontsize = "18"; height = 2; width = 2.6; fontsize = 40;];
+        action_state_1 [label = "Move to Target";];
+        action_state_2 [label = "Move to Calibrating area";];
+        action_state_3 [label = "Move to Tower area";];
+        dir = "right";
+        action_state_4 [label = "Move to Home";];
+        
+        
+        node [shape = rectangle; style = filled; fontsize = "18"; height = 2; width = 2.6; fontsize = 40;];
+        program_state_1 [label = "Home";];
+        program_state_2 [label = "Wait for connection";];
+        program_state_3 [label = "Wait for data";];
+        program_state_4 [label = "Start Clamping";];
+        program_state_5 [label = "Calibrating";];
+        program_state_6 [label = "Build Tower";];
+        
+
+        
+        subgraph cluster0 {
+            label = "";
+            style = invis;
+            rank = same;
+            
+            program_state_1 -> program_state_2;
+            program_state_2 -> program_state_3;
+            program_state_3 -> action_state_1;
+            action_state_1 -> program_state_4;
+        }
+        
+        subgraph cluster1 {
+            label = "";
+            style = invis;
+            rank = same;
+            action_state_2 -> program_state_5;
+            program_state_5 -> action_state_3;
+            action_state_3 -> program_state_6;
+            program_state_6 -> action_state_4;
+        }
+        
+        
+        action_state_4 -> program_state_1 [constraint = false; tailport = n; headport = s;style = solid];
+        program_state_4 -> action_state_2 [constraint = false; tailport = s; headport = n;];
+        program_state_1 -> program_state_3 [curvature = 0.2; constraint = false; tailport = n; headport = n;];
+        invisible_node [style = invis;width = 0;height = 0;shape = none;];
+        invisible_node -> action_state_3 [style = invis;];
+        invisible_node -> program_state_3 [style = invis;];
+    }
+}

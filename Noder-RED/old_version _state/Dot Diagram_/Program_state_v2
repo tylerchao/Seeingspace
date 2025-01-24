@@ -1,0 +1,52 @@
+digraph G {
+    subgraph cluster {
+        graph [label = "Program States Diagram"; fontsize = 20; margin = 20;];
+        
+        node [shape = ellipse; style = filled; height = 0.8; width = 2.4;fontsize=20];
+        action_state_1 [label = "Move to Target";];
+        action_state_2 [label = "Move to Calibrating area";];
+        action_state_3 [label = "Move to Tower area";];
+        action_state_4 [label = "Move to Home";];
+        
+        
+        node [shape = rectangle; style = filled; height = 0.8; width = 2.4;fontsize=20];
+        program_state_1 [label = "Home"];
+        program_state_2 [label = "Wait for connection";];
+        program_state_3 [label = "Wait for data";];
+        program_state_4 [label = "Start Clamping";];
+        program_state_5 [label = "Calibrating";];
+        program_state_6 [label = "Build Tower";];
+        
+        
+        program_state_1 -> program_state_2;
+        program_state_2 -> program_state_3;
+        program_state_3 -> action_state_1;
+        action_state_1 -> program_state_4;
+        program_state_4 -> action_state_2;
+        action_state_2 -> program_state_5;
+        program_state_5 -> action_state_3;
+        action_state_3 -> program_state_6;
+        program_state_6 -> action_state_4;
+        
+        program_state_1 -> program_state_3 [tailport = w; headport = w;];
+        action_state_4 -> program_state_1;
+
+
+    }
+    
+    
+    // invisible_node [width = 0;height = 0;shape = none;];
+    // invisible_node1 [width = 0;height = 0;shape = none;];
+    
+    // invisible_node -> action_state_3 ;
+    // invisible_node -> program_state_3;
+    
+    // invisible_node1 -> program_state_4;
+    // invisible_node1 -> action_state_4;
+    
+    // program_state_4 -> invisible_node1[constraint=true, style=invis;]
+    // program_state_4 -> action_state_2[tailport=e, headport=w];
+    // action_state_4->program_state_1[tailport=w, headport=e];
+
+    
+}

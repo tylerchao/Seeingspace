@@ -1,0 +1,1006 @@
+[
+    {
+        "id": "6a1d11a7d096cfe5",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "7034df41e456a188",
+        "type": "debug",
+        "z": "6a1d11a7d096cfe5",
+        "name": "debug mqtt output",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 890,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "73a545e84506e308",
+        "type": "function",
+        "z": "6a1d11a7d096cfe5",
+        "name": "Level_number",
+        "func": "//show the current level of the Jenga Tower\nvar topic = msg.topic;\nif (topic === \"kuka/level\") {\n    return [msg, null];\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 880,
+        "y": 120,
+        "wires": [
+            [
+                "2679dbbeacc80dfe"
+            ]
+        ]
+    },
+    {
+        "id": "8cbc7cbfa4c92f62",
+        "type": "function",
+        "z": "6a1d11a7d096cfe5",
+        "name": "Flag_No_blocks",
+        "func": "//show the current level of the Jenga Tower\nvar topic = msg.topic;\nif (topic === \"kuka/no_blocks\") {\n    return [msg, null];\n}\n\n    \n\n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 880,
+        "y": 180,
+        "wires": [
+            [
+                "dc84e5e86f5b7ffa",
+                "43f72f9ada6d7773"
+            ]
+        ]
+    },
+    {
+        "id": "f27be07a08331103",
+        "type": "function",
+        "z": "6a1d11a7d096cfe5",
+        "name": "Tool_coord_x",
+        "func": "var topic = msg.topic;\nif (topic === \"kuka/tool/coord_x\") {\n    msg.payload = Math.round(msg.payload)\n    return [msg, null];\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 870,
+        "y": 420,
+        "wires": [
+            [
+                "7fa83bcff82756bf"
+            ]
+        ]
+    },
+    {
+        "id": "5fccf052dc6235a8",
+        "type": "function",
+        "z": "6a1d11a7d096cfe5",
+        "name": "Tool_coord_y",
+        "func": "var topic = msg.topic;\nif (topic === \"kuka/tool/coord_y\") {\n    msg.payload = Math.round(msg.payload)\n    return [msg, null];\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 870,
+        "y": 480,
+        "wires": [
+            [
+                "440efed6b253312c"
+            ]
+        ]
+    },
+    {
+        "id": "14af1c08d4a4beaa",
+        "type": "function",
+        "z": "6a1d11a7d096cfe5",
+        "name": "Tool_coord_z",
+        "func": "var topic = msg.topic;\nif (topic === \"kuka/tool/coord_z\") {\n    msg.topic = \"Tool Z\"\n    msg.payload=Math.round(msg.payload)\n    global.set(\"tool_z\", msg.payload)\n    return [msg, null];\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 870,
+        "y": 540,
+        "wires": [
+            [
+                "b8994d355c318918",
+                "9f486b4a15ae64c6",
+                "34cae1cca617f83f",
+                "4b9c2514ef661dda"
+            ]
+        ]
+    },
+    {
+        "id": "1fc5074d5562e5d4",
+        "type": "mqtt in",
+        "z": "6a1d11a7d096cfe5",
+        "name": "",
+        "topic": "kuka/#",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "9dd0e4dcca52e280",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 550,
+        "y": 160,
+        "wires": [
+            [
+                "7034df41e456a188",
+                "73a545e84506e308",
+                "f27be07a08331103",
+                "5fccf052dc6235a8",
+                "14af1c08d4a4beaa",
+                "4d035da0694829cb",
+                "2c24b8a10860574c",
+                "0a781a95247968ab",
+                "4b06332663d81962",
+                "011c1be3a36b7dc8",
+                "1b9a6b1478a4e738",
+                "8cbc7cbfa4c92f62",
+                "d9457778a12a7f25"
+            ]
+        ]
+    },
+    {
+        "id": "c7442290b0e01b5f",
+        "type": "inject",
+        "z": "6a1d11a7d096cfe5",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 520,
+        "y": 2040,
+        "wires": [
+            [
+                "52ba9eb9692bc406"
+            ]
+        ]
+    },
+    {
+        "id": "4d035da0694829cb",
+        "type": "function",
+        "z": "6a1d11a7d096cfe5",
+        "name": "Block_coord_x",
+        "func": "var topic = msg.topic;\nif (topic === \"kuka/block/coord_x\") {\n    return [msg, null];\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 880,
+        "y": 920,
+        "wires": [
+            [
+                "9041b0013c9035eb"
+            ]
+        ]
+    },
+    {
+        "id": "2c24b8a10860574c",
+        "type": "function",
+        "z": "6a1d11a7d096cfe5",
+        "name": "Block_coord_y",
+        "func": "var topic = msg.topic;\nif (topic === \"kuka/block/coord_y\") {\n    return [msg, null];\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 880,
+        "y": 980,
+        "wires": [
+            [
+                "81310ddb8974fc17"
+            ]
+        ]
+    },
+    {
+        "id": "0a781a95247968ab",
+        "type": "function",
+        "z": "6a1d11a7d096cfe5",
+        "name": "Block_coord_z",
+        "func": "var topic = msg.topic;\nif (topic === \"kuka/block/coord_z\") {\n    msg.topic = \"Block Z\"\n    global.set(\"block_z\", msg.payload)\n    return [msg, null];\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 880,
+        "y": 860,
+        "wires": [
+            [
+                "578b3462f1cad217",
+                "34cae1cca617f83f",
+                "4b9c2514ef661dda"
+            ]
+        ]
+    },
+    {
+        "id": "4b06332663d81962",
+        "type": "function",
+        "z": "6a1d11a7d096cfe5",
+        "name": "Block angle ",
+        "func": "var topic = msg.topic;\nif (topic === \"kuka/block/angle\") {\n    return [msg, null];\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 870,
+        "y": 1100,
+        "wires": [
+            [
+                "a727826f8610c2fb",
+                "a38023e5430bc09f"
+            ]
+        ]
+    },
+    {
+        "id": "011c1be3a36b7dc8",
+        "type": "function",
+        "z": "6a1d11a7d096cfe5",
+        "name": "Decide_Program_states",
+        "func": "var topic = msg.topic;\n\nif (topic === \"kuka/program_state\") {\n    global.set(\"program_state\", msg.payload)\n    if (msg.payload === \"Data\"){\n\n        return { payload: \"Program_states/Data_connection.jpg\"} \n    } \n    else if (msg.payload === \"Clamping\"){\n        return { payload: \"Program_states/Target_clamping.jpg\"} \n    } \n    else if (msg.payload === \"Calibrating_area\") {\n        return { payload: \"Program_states/Calibrating_area.jpg\" }\n    } \n    else if (msg.payload === \"Calibrating\") {\n        return { payload: \"Program_states/Calibrating.jpg\" }\n    } \n    else if (msg.payload === \"Building_tower\") {\n        return { payload: \"Program_states/Building_tower.jpg\" }\n    } \n    else if (msg.payload === \"Home\") {\n        return { payload: \"Program_states/Home.jpg\" }\n    } \n    else {\n        return { payload: \"Program_states/Robot_diagram.jpg\" }\n    }\n\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 910,
+        "y": 1300,
+        "wires": [
+            [
+                "8d0845309a09506c"
+            ]
+        ]
+    },
+    {
+        "id": "1b9a6b1478a4e738",
+        "type": "function",
+        "z": "6a1d11a7d096cfe5",
+        "name": "Gripper_state",
+        "func": "//show the current level of the Jenga Tower\nvar topic = msg.topic;\nif (topic === \"kuka/gripper_state\") {\n    return [msg, null];\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 880,
+        "y": 240,
+        "wires": [
+            [
+                "13640d52d92e28d7"
+            ]
+        ]
+    },
+    {
+        "id": "ffb738ab5647f183",
+        "type": "debug",
+        "z": "6a1d11a7d096cfe5",
+        "name": "debug 9",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1440,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "34cae1cca617f83f",
+        "type": "function",
+        "z": "6a1d11a7d096cfe5",
+        "name": "Warning ",
+        "func": "var tool_z=global.get(\"tool_z\")\nvar block_z = global.get(\"block_z\")\nvar state = global.get(\"program_state\")\n\nif(state == \"Clamping\"){\n   if (Math.abs(tool_z - block_z) < 50) {\n      msg.payload = \"Kuka arm is approaching\"\n      return msg\n   }\n}\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1180,
+        "y": 780,
+        "wires": [
+            [
+                "07cbf596896cd99e",
+                "6563e2ac4ec9b6fd"
+            ]
+        ]
+    },
+    {
+        "id": "43f72f9ada6d7773",
+        "type": "debug",
+        "z": "6a1d11a7d096cfe5",
+        "name": "debug 11",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1340,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "d9457778a12a7f25",
+        "type": "function",
+        "z": "6a1d11a7d096cfe5",
+        "name": "function 1",
+        "func": "if(msg.topic === 'camera/start'){\n    msg.payload = '/Users/tyler/Documents/Camera-access-python/webcam_v2.py'\n    return msg;    \n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 1440,
+        "wires": [
+            [
+                "3c514db8f4cf68ec"
+            ]
+        ]
+    },
+    {
+        "id": "3c514db8f4cf68ec",
+        "type": "exec",
+        "z": "6a1d11a7d096cfe5",
+        "command": "python3",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 800,
+        "y": 1440,
+        "wires": [
+            [
+                "a1bc1dde4ff2bf49"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "a1bc1dde4ff2bf49",
+        "type": "debug",
+        "z": "6a1d11a7d096cfe5",
+        "name": "debug 13",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1260,
+        "y": 1440,
+        "wires": []
+    },
+    {
+        "id": "2679dbbeacc80dfe",
+        "type": "ui_text",
+        "z": "6a1d11a7d096cfe5",
+        "group": "0f10fc221eda0cff",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Level :",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "level",
+        "x": 1110,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "7fa83bcff82756bf",
+        "type": "ui_text",
+        "z": "6a1d11a7d096cfe5",
+        "group": "dfaa331a38f34ccf",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Tool X coordinate :",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 1170,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "440efed6b253312c",
+        "type": "ui_text",
+        "z": "6a1d11a7d096cfe5",
+        "group": "dfaa331a38f34ccf",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Tool Y coordinate :",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 1170,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "b8994d355c318918",
+        "type": "ui_text",
+        "z": "6a1d11a7d096cfe5",
+        "group": "dfaa331a38f34ccf",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Tool Z coordinate : ",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 1170,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "9041b0013c9035eb",
+        "type": "ui_text",
+        "z": "6a1d11a7d096cfe5",
+        "group": "f13e9a0548ef957c",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Block X coordinate :",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 1120,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "81310ddb8974fc17",
+        "type": "ui_text",
+        "z": "6a1d11a7d096cfe5",
+        "group": "f13e9a0548ef957c",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Block Y coordinate : ",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 1120,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "578b3462f1cad217",
+        "type": "ui_text",
+        "z": "6a1d11a7d096cfe5",
+        "group": "f13e9a0548ef957c",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Block Z coordinate :",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 1120,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "a727826f8610c2fb",
+        "type": "ui_text",
+        "z": "6a1d11a7d096cfe5",
+        "group": "f13e9a0548ef957c",
+        "order": 4,
+        "width": "0",
+        "height": "0",
+        "name": "",
+        "label": "Block Angle :",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 1090,
+        "y": 1100,
+        "wires": []
+    },
+    {
+        "id": "13640d52d92e28d7",
+        "type": "ui_text",
+        "z": "6a1d11a7d096cfe5",
+        "group": "0f10fc221eda0cff",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Gripper state :",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 1140,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "a38023e5430bc09f",
+        "type": "ui_gauge",
+        "z": "6a1d11a7d096cfe5",
+        "name": "",
+        "group": "f13e9a0548ef957c",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "gtype": "donut",
+        "title": "Block Angle Graphical Display",
+        "label": "deg",
+        "format": "{{value}}",
+        "min": "-180",
+        "max": "180",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1150,
+        "y": 1180,
+        "wires": []
+    },
+    {
+        "id": "9f486b4a15ae64c6",
+        "type": "ui_gauge",
+        "z": "6a1d11a7d096cfe5",
+        "name": "",
+        "group": "6796d128a34d530a",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "gtype": "wave",
+        "title": "Z-axis ",
+        "label": "mm",
+        "format": "{{value}}",
+        "min": "64",
+        "max": "894",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1130,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "4b9c2514ef661dda",
+        "type": "ui_chart",
+        "z": "6a1d11a7d096cfe5",
+        "name": "",
+        "group": "6796d128a34d530a",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "Comparison_Z coordinate",
+        "chartType": "bar",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "1000",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1210,
+        "y": 700,
+        "wires": [
+            [
+                "ffb738ab5647f183"
+            ]
+        ]
+    },
+    {
+        "id": "07cbf596896cd99e",
+        "type": "ui_audio",
+        "z": "6a1d11a7d096cfe5",
+        "name": "",
+        "group": "0f10fc221eda0cff",
+        "voice": "Samantha",
+        "always": false,
+        "x": 1500,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "6563e2ac4ec9b6fd",
+        "type": "ui_toast",
+        "z": "6a1d11a7d096cfe5",
+        "position": "top right",
+        "displayTime": "",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "",
+        "name": "",
+        "x": 1530,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "447bc7c096ca7952",
+        "type": "ui_template",
+        "z": "6a1d11a7d096cfe5",
+        "group": "7a973aaba4196b4c",
+        "name": "",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "format": "<video id=\"myVideo1\" autoplay style=\"width: 640px; height: 480px;\"></video>\n\n<script>\n  var video1 = document.getElementById(\"myVideo1\");\n\nnavigator.mediaDevices.getUserMedia({video: {deviceId: 'camera1'}})\n.then(function(stream) {\n  video1.srcObject = stream;\n})\n.catch(function(error) {\n  console.log(\"Error getting camera1 stream: \" + error);\n});\n\n</script>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 800,
+        "y": 1940,
+        "wires": [
+            [
+                "4e011fc7843da299"
+            ]
+        ]
+    },
+    {
+        "id": "dc84e5e86f5b7ffa",
+        "type": "ui_led",
+        "z": "6a1d11a7d096cfe5",
+        "order": 1,
+        "group": "0f10fc221eda0cff",
+        "width": 0,
+        "height": 0,
+        "label": "No blocks :",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ff0000",
+                "value": "True",
+                "valueType": "str"
+            },
+            {
+                "color": "#000000",
+                "value": "False",
+                "valueType": "str"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "Blocks_On_Board",
+        "x": 1150,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "52ba9eb9692bc406",
+        "type": "ui_media",
+        "z": "6a1d11a7d096cfe5",
+        "group": "69c6d945d8dead7f",
+        "name": "The picture of Jenga",
+        "width": "6",
+        "height": "12",
+        "order": 7,
+        "category": "Jenga display",
+        "file": "Jenga-model.jpeg",
+        "layout": "center",
+        "showcontrols": false,
+        "loop": true,
+        "onstart": false,
+        "scope": "local",
+        "tooltip": "",
+        "x": 760,
+        "y": 2040,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8d0845309a09506c",
+        "type": "ui_media",
+        "z": "6a1d11a7d096cfe5",
+        "group": "c5744fbe7fae6294",
+        "name": "",
+        "width": "24",
+        "height": "3",
+        "order": 2,
+        "category": "program_state",
+        "file": "program_state.jpg",
+        "layout": "adjust",
+        "showcontrols": true,
+        "loop": true,
+        "onstart": false,
+        "scope": "local",
+        "tooltip": "",
+        "x": 1150,
+        "y": 1300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "92bd445dfc2b72a0",
+        "type": "inject",
+        "z": "6a1d11a7d096cfe5",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "activate kontel camera ",
+        "payloadType": "str",
+        "x": 560,
+        "y": 1940,
+        "wires": [
+            [
+                "447bc7c096ca7952"
+            ]
+        ]
+    },
+    {
+        "id": "4e011fc7843da299",
+        "type": "debug",
+        "z": "6a1d11a7d096cfe5",
+        "name": "debug 14",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1140,
+        "y": 1940,
+        "wires": []
+    },
+    {
+        "id": "583b533208728b19",
+        "type": "debug",
+        "z": "6a1d11a7d096cfe5",
+        "name": "debug 15",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1440,
+        "y": 1560,
+        "wires": []
+    },
+    {
+        "id": "c401a4e52aa82698",
+        "type": "ui_iframe",
+        "z": "6a1d11a7d096cfe5",
+        "group": "e52c44fab5743309",
+        "name": "",
+        "order": 1,
+        "width": "6",
+        "height": "5",
+        "url": "http://172.16.6.18:5000/video",
+        "origin": "*",
+        "scale": 100,
+        "x": 790,
+        "y": 1580,
+        "wires": [
+            [
+                "583b533208728b19"
+            ]
+        ]
+    },
+    {
+        "id": "9dd0e4dcca52e280",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "0f10fc221eda0cff",
+        "type": "ui_group",
+        "name": "Info",
+        "tab": "3020c5ec1faaab87",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "dfaa331a38f34ccf",
+        "type": "ui_group",
+        "name": "Kuka Robot Coorinate",
+        "tab": "3020c5ec1faaab87",
+        "order": 5,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "f13e9a0548ef957c",
+        "type": "ui_group",
+        "name": "Block coordinate",
+        "tab": "3020c5ec1faaab87",
+        "order": 6,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "6796d128a34d530a",
+        "type": "ui_group",
+        "name": " Z-axis variation",
+        "tab": "3020c5ec1faaab87",
+        "order": 7,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "7a973aaba4196b4c",
+        "type": "ui_group",
+        "name": "Konftel camera",
+        "tab": "3020c5ec1faaab87",
+        "order": 3,
+        "disp": true,
+        "width": "12",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "69c6d945d8dead7f",
+        "type": "ui_group",
+        "name": "Jenga picture",
+        "tab": "3020c5ec1faaab87",
+        "order": 8,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "c5744fbe7fae6294",
+        "type": "ui_group",
+        "name": "State_Diagram",
+        "tab": "3020c5ec1faaab87",
+        "order": 1,
+        "disp": true,
+        "width": "24",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "e52c44fab5743309",
+        "type": "ui_group",
+        "name": "Basler camera ",
+        "tab": "3020c5ec1faaab87",
+        "order": 4,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "3020c5ec1faaab87",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]

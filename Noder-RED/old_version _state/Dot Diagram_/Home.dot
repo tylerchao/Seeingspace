@@ -1,0 +1,16 @@
+digraph G {
+    subgraph cluster0 {
+
+        graph [label = "Robot_States_Diagram"; margin = 40; fontsize = 25;];
+        
+        node [shape = ellipse; style = filled; fontsize = "18"; height = 1; width = 2.6;];
+        Data_and_Connection -> Target_clamping;
+        Target_clamping -> Calibrating_area;
+        Calibrating_area -> Calibrating;
+        Calibrating -> Building_tower;
+        Building_tower -> Home;
+        Home -> Data_and_Connection;
+        
+        Home [style = filled;fillcolor = red;];
+    }
+}

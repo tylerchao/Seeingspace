@@ -1,0 +1,104 @@
+digraph {
+    node [shape=plain]
+    rankdir=LR;
+
+subgraph cluster_Asia { 
+    label = "Asia";
+
+    China [label=<<table border="0" cellborder="1" cellspacing="0">
+      <tr><td><i>China</i></td></tr>
+      <tr><td bgcolor="yellow" port="Shanghai">Shanghai</td></tr>
+      <tr><td bgcolor="white" port="Beijing">Beijing</td></tr>
+      <tr><td bgcolor="white" port="Chongqing">Chongqing</td></tr>
+      <tr><td bgcolor="white" port="Tianjin">Tianjin</td></tr>
+    </table>>];
+    
+      India [label=<<table border="0" cellborder="1" cellspacing="0">
+      <tr><td><i>India</i></td></tr>
+      <tr><td bgcolor="yellow" port="NewDelhi">NewDelhi</td></tr>
+      <tr><td bgcolor="white" port="Mumbai">Mumbai</td></tr>
+      <tr><td bgcolor="white" port="Bangalore">Bangalore</td></tr>
+      <tr><td bgcolor="white" port="Ahmadabad">Ahmadabad</td></tr>
+    </table>>];
+
+    Thailand [label=<<table border="0" cellborder="1" cellspacing="0">
+      <tr><td><i>Thailand</i></td></tr>  
+      <tr><td bgcolor="yellow" port="Bangkok">Bangkok</td></tr>
+      <tr><td bgcolor="white" port="ChiangRai">ChiangRai</td></tr>
+    </table>>];
+    
+    Nepal [label=<<table border="0" cellborder="1" cellspacing="0">
+      <tr><td><i>Nepal</i></td></tr>
+      <tr><td bgcolor="yellow" port="Kathmandu">Kathmandu</td></tr>
+      <tr><td bgcolor="white" port="Birgunj">Birgunj</td></tr>
+    </table>>];
+      
+    China:Shanghai->Thailand:Bangkok[color="blue", tyle=solid ]
+    China:Beijing->Nepal:Kathmandu[color="blue", style=solid ]
+    China:Tianjin->India:NewDelhi[color="blue",style=solid ]
+    China:Chongqing->India:Ahmadabad[color="blue", style=solid ]
+    India:Ahmadabad->India:Mumbai[color="blue", style=solid ]
+}
+
+
+  
+subgraph cluster_Europe {
+        label = "Europe"; 
+
+        Spain [label=<<table border="0" cellborder="1" cellspacing="0">
+          <tr><td><i>Spain</i></td></tr>
+          <tr><td bgcolor="yellow" port="Madrid">Madrid</td></tr>
+          <tr><td bgcolor="white" port="Malaga">Malaga</td></tr>
+          <tr><td bgcolor="white" port="Barcelona">Barcelona</td></tr>
+          <tr><td bgcolor="white" port="Valencia">Valencia</td></tr>
+        </table>>];
+        
+        Netherlands [label=<
+        <table border="0" cellborder="1" cellspacing="0">
+          <tr><td><i>Netherlands</i></td></tr>
+          <tr><td bgcolor="yellow" port="Amsterdam">Amsterdam</td></tr>
+          <tr><td bgcolor="white" port="Rotterdam">Rotterdam</td></tr>
+          <tr><td bgcolor="white" port="Dokkum">Dokkum</td></tr>
+        </table>>];
+        
+        Italy [label=<
+        <table border="0" cellborder="1" cellspacing="0">
+          <tr><td><i>Italy</i></td></tr>
+          <tr><td bgcolor="yellow" port="Rome">Rome</td></tr>
+          <tr><td bgcolor="white" port="Venice">Venice</td></tr>
+          <tr><td bgcolor="white" port="Milan">Milan</td></tr>
+        </table>>];
+        
+        France [label=<
+        <table border="0" cellborder="1" cellspacing="0">
+          <tr><td><i>France</i></td></tr>
+          <tr><td bgcolor="yellow" port="Paris">Paris</td></tr>
+          <tr><td bgcolor="white" port="Nice">Nice</td></tr>
+          <tr><td bgcolor="white" port="Marseille">Marseille</td></tr>
+        </table>>];
+
+        Spain:Madrid->Netherlands:Dokkum[ color="blue",style=solid ]
+        Spain:Barcelona->Italy:Milan[ color="blue",style=solid ]
+        Spain:Malaga->Netherlands:Amsterdam[color="blue", style=solid ]
+        Spain:Valencia->France:Nice[color="blue", style=solid ]
+}
+
+    {  
+      00 //[style=invis];
+      01 //[style=invis];
+      02 //[style=invis];
+      03 //[style=invis];
+      00 -> 01 -> 02 -> 03 //[style=invis];
+
+      00 -> Spain //[style=invis];
+      01 -> Netherlands //[style=invis];
+      01 -> Italy //[style=invis];
+      01 -> France //[style=invis];
+      02 -> China //[style=invis];
+      03 -> Nepal //[style=invis];
+      03 -> Thailand //[style=invis];
+      03 -> India //[style=invis];
+    
+    Spain -> China //[ style=invis];
+    }
+}

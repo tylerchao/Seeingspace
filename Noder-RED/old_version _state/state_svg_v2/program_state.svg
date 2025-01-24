@@ -1,0 +1,138 @@
+<?xml version="1.0" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="344pt" height="1000pt" viewBox="0.00 0.00 344 1000">
+<g id="graph0" class="graph" transform="translate(-5.32320998737417,949.5205441983309) scale(0.925304428037856)" data-name="G">
+
+<polygon fill="white" stroke="none" points="-4,4 -4,-996 340,-996 340,4 -4,4"/>
+<g id="clust1" class="cluster" data-name="cluster">
+
+<polygon fill="none" stroke="black" points="8,-8 8,-984 328,-984 328,-8 8,-8"/>
+<text text-anchor="middle" x="168" y="-962" font-family="Times,serif" font-size="20">Program States Diagram</text>
+</g>
+<!-- action_state_1 -->
+<g id="node1" class="node" pointer-events="visible" data-name="action_state_1">
+
+<ellipse fill="lightgrey" stroke="black" cx="205" cy="-903" rx="86.5" ry="29"/>
+<text text-anchor="middle" x="205" y="-897" font-family="Times,serif" font-size="20">Move to Target</text>
+</g>
+<!-- program_state_4 -->
+<g id="node8" class="node" pointer-events="visible" data-name="program_state_4">
+
+<polygon fill="lightgrey" stroke="black" points="260.5,-838 87.5,-838 87.5,-780 260.5,-780 260.5,-838"/>
+<text text-anchor="middle" x="174" y="-803" font-family="Times,serif" font-size="20">Start Clamping</text>
+</g>
+<!-- action_state_2 -->
+<g id="node2" class="node" pointer-events="visible" data-name="action_state_2">
+
+<ellipse fill="lightgrey" stroke="black" cx="158" cy="-715" rx="129.57" ry="29"/>
+<text text-anchor="middle" x="158" y="-709" font-family="Times,serif" font-size="20">Move to Calibrating area</text>
+</g><g id="edge4" class="edge" data-name="action_state_1-&gt;program_state_4" data-comment="action_state_2">
+
+<path fill="none" stroke="black" d="M195.53,-873.9C192.88,-866.03 189.95,-857.34 187.13,-848.97"/>
+<polygon fill="black" stroke="black" points="190.51,-848.04 184,-839.68 183.88,-850.28 190.51,-848.04"/>
+</g>
+<!-- program_state_5 -->
+<g id="node9" class="node" pointer-events="visible" data-name="program_state_5">
+
+<polygon fill="lightgrey" stroke="black" points="245.5,-650 72.5,-650 72.5,-592 245.5,-592 245.5,-650"/>
+<text text-anchor="middle" x="159" y="-615" font-family="Times,serif" font-size="20">Calibrating</text>
+</g>
+<!-- action_state_3 -->
+<g id="node3" class="node" pointer-events="visible" data-name="action_state_3">
+
+<ellipse fill="lightgrey" stroke="black" cx="170" cy="-527" rx="107.27" ry="29"/>
+<text text-anchor="middle" x="170" y="-521" font-family="Times,serif" font-size="20">Move to Tower area</text>
+</g>
+<!-- program_state_6 -->
+<g id="node10" class="node" pointer-events="visible" data-name="program_state_6">
+
+<polygon fill="lightgrey" stroke="black" points="257.5,-462 84.5,-462 84.5,-404 257.5,-404 257.5,-462"/>
+<text text-anchor="middle" x="171" y="-427" font-family="Times,serif" font-size="20">Build Tower</text>
+</g><g id="edge6" class="edge" data-name="action_state_2-&gt;program_state_5" data-comment="program_state_6">
+
+<path fill="none" stroke="black" d="M158.31,-685.65C158.39,-678.13 158.48,-669.86 158.57,-661.86"/>
+<polygon fill="black" stroke="black" points="162.07,-661.97 158.67,-651.93 155.07,-661.89 162.07,-661.97"/>
+</g>
+<!-- action_state_4 -->
+<g id="node4" class="node" pointer-events="visible" data-name="action_state_4">
+
+<ellipse fill="lightgrey" stroke="black" cx="176" cy="-339" rx="86.5" ry="29"/>
+<text text-anchor="middle" x="176" y="-333" font-family="Times,serif" font-size="20">Move to Home</text>
+</g>
+<!-- program_state_1 -->
+<!-- program_state_1 -->
+<g id="node5" class="node" pointer-events="visible" data-name="program_state_1">
+
+<polygon fill="lightgrey" stroke="black" points="265.5,-274 92.5,-274 92.5,-216 265.5,-216 265.5,-274"/>
+<text text-anchor="middle" x="179" y="-239" font-family="Times,serif" font-size="20">Home</text>
+</g>
+<!-- program_state_2 -->
+<g id="edge11" class="edge" data-name="action_state_4-&gt;program_state_1" data-comment="program_state_2">
+
+<path fill="none" stroke="black" d="M176.92,-309.65C177.17,-302.13 177.44,-293.86 177.7,-285.86"/>
+<polygon fill="black" stroke="black" points="181.2,-286.04 178.02,-275.93 174.2,-285.81 181.2,-286.04"/>
+</g>
+<!-- action_state_4&#45;&gt;program_state_1 -->
+
+<!-- program_state_2 -->
+<g id="node6" class="node" pointer-events="visible" data-name="program_state_2">
+
+<polygon fill="lightgrey" stroke="black" points="286.93,-180 111.07,-180 111.07,-122 286.93,-122 286.93,-180"/>
+<text text-anchor="middle" x="199" y="-145" font-family="Times,serif" font-size="20">Wait for connection</text>
+</g><g id="edge8" class="edge" data-name="action_state_3-&gt;program_state_6" data-comment="program_state_2">
+
+<path fill="none" stroke="black" d="M170.31,-497.65C170.39,-490.13 170.48,-481.86 170.57,-473.86"/>
+<polygon fill="black" stroke="black" points="174.07,-473.97 170.67,-463.93 167.07,-473.89 174.07,-473.97"/>
+</g>
+<!-- program_state_1&#45;&gt;program_state_2 -->
+<g id="edge1" class="edge" data-name="program_state_1-&gt;program_state_2">
+
+<path fill="none" stroke="black" d="M185.16,-215.65C186.82,-208.04 188.64,-199.67 190.4,-191.58"/>
+<polygon fill="black" stroke="black" points="193.8,-192.41 192.5,-181.9 186.96,-190.93 193.8,-192.41"/>
+</g>
+<!-- program_state_1&#45;&gt;program_state_2 -->
+
+<!-- program_state_3 -->
+
+<!-- program_state_3 -->
+<g id="node7" class="node" pointer-events="visible" data-name="program_state_3">
+
+<polygon fill="lightgrey" stroke="black" points="285.5,-86 112.5,-86 112.5,-28 285.5,-28 285.5,-86"/>
+<text text-anchor="middle" x="199" y="-51" font-family="Times,serif" font-size="20">Wait for data</text>
+</g>
+<g id="edge10" class="edge" data-name="program_state_1-&gt;program_state_3" data-comment="program_state_3">
+
+<path fill="none" stroke="black" d="M91,-245C10.91,-245 25.33,-74.21 99.61,-58.2"/>
+<polygon fill="black" stroke="black" points="99.92,-61.69 109.49,-57.16 99.18,-54.73 99.92,-61.69"/>
+</g>
+<!-- program_state_1&#45;&gt;program_state_3 -->
+<g id="edge2" class="edge" data-name="program_state_2-&gt;program_state_3" data-comment="program_state_1-&gt;program_state_3">
+
+<path fill="none" stroke="black" d="M199,-121.65C199,-114.13 199,-105.86 199,-97.86"/>
+<polygon fill="black" stroke="black" points="202.5,-97.93 199,-87.93 195.5,-97.93 202.5,-97.93"/>
+</g>
+<!-- program_state_2&#45;&gt;program_state_3 -->
+<g id="edge3" class="edge" data-name="program_state_3-&gt;action_state_1" data-comment="program_state_2-&gt;program_state_3">
+
+<path fill="none" stroke="black" d="M260.25,-86.49C274.19,-95.85 287.41,-107.63 296,-122 323.93,-168.73 307,-189.56 307,-244 307,-716 307,-716 307,-716 307,-772.66 299.32,-789.51 270,-838 263.54,-848.69 254.89,-858.86 246.01,-867.83"/>
+<polygon fill="black" stroke="black" points="243.71,-865.19 238.95,-874.65 248.57,-870.23 243.71,-865.19"/>
+</g>
+<!-- program_state_3&#45;&gt;action_state_1 -->
+<g id="edge5" class="edge" data-name="program_state_4-&gt;action_state_2" data-comment="program_state_3-&gt;action_state_1">
+
+<path fill="none" stroke="black" d="M169.07,-779.65C167.75,-772.04 166.29,-763.67 164.88,-755.58"/>
+<polygon fill="black" stroke="black" points="168.36,-755.16 163.2,-745.91 161.47,-756.36 168.36,-755.16"/>
+</g>
+<!-- program_state_4&#45;&gt;action_state_2 -->
+<g id="edge7" class="edge" data-name="program_state_5-&gt;action_state_3" data-comment="program_state_4-&gt;action_state_2">
+
+<path fill="none" stroke="black" d="M162.39,-591.65C163.3,-584.04 164.3,-575.67 165.27,-567.58"/>
+<polygon fill="black" stroke="black" points="168.71,-568.27 166.42,-557.92 161.76,-567.44 168.71,-568.27"/>
+</g>
+<!-- program_state_6&#45;&gt;action_state_4 -->
+<g id="edge9" class="edge" data-name="program_state_6-&gt;action_state_4">
+
+<path fill="none" stroke="black" d="M172.54,-403.65C172.95,-396.13 173.4,-387.86 173.83,-379.86"/>
+<polygon fill="black" stroke="black" points="177.33,-380.11 174.37,-369.93 170.34,-379.73 177.33,-380.11"/>
+</g>
+</g>
+</svg>

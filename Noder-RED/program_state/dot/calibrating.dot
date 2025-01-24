@@ -1,0 +1,33 @@
+digraph G {
+    rankdir=LR;
+    edge[arrowsize=2;penwidth="3"]
+    subgraph cluster1 {
+        graph[height = 20; width = 20;]
+        label="Program states";
+        scale=2.0;
+        fontsize= "80"
+        rank=same;
+        
+        node[style = filled;fontsize = "60";height = 3;width = 1.5;]
+        program_state_1 [label = "Home";height = 1.3;width = 1.5;];
+        program_state_2 [label = "Wait for connection";]
+        program_state_3 [label = "Wait for data";]
+        program_state_4 [label = "Start Clamping";]
+        action_state_1 [label = "Move to Target";]
+        program_state_5 [label = "Calibrating";color = red]
+        program_state_6 [label = "Build Tower";]
+        action_state_2 [label = "Move to Calibrating area";];
+        action_state_3 [label = "Move to Tower area";];
+        action_state_4 [label = "Move to Home";];
+        
+    
+
+        program_state_1 -> program_state_2 -> program_state_3 -> action_state_1-> program_state_4 ;
+        program_state_4-> action_state_2 -> program_state_5->action_state_3-> program_state_6-> action_state_4;
+
+    }
+
+    action_state_4-> program_state_1 ;
+    program_state_1 -> program_state_3;
+
+}
